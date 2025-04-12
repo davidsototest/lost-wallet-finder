@@ -1,6 +1,7 @@
 
-//diccionario de palabras
-export const diccionarioBIP399: string[] = [
+//diccionario de palabras ORIGINAL
+
+export const diccionarioBIP3: string[] = [
   "abandon",
   "ability",
   "able",

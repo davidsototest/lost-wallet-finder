@@ -1,4 +1,3 @@
-import { diccionarioBIP399 } from "../data/diccionarioBIP39";
 import * as path from "path";
 import { generarWallet_BTC } from "./generarWallet_BTC";
 import { consultarSaldoWallet } from "../consultas/consultarSaldoWallet";
@@ -7,6 +6,8 @@ import { leerSeguimientoIndice } from "./leerSeguimientoIndice";
 import { leerSeguimientoWalletCash } from "./leerSeguimientoWalletCash";
 import { escribirSeguimientoIndice } from "./escribirSeguimientoIndice";
 import { escribirWalletConCash } from "./escribirWalletConCash";
+import { diccionarioMezclado } from "../data/diccionario/diccionarioBIP39";
+import { enviarMensajeTelegram } from "./telegram/telegram";
 
 //ruta del sonido 
 const rutaSonido = path.join(__dirname, '../data/sonido/mision-cumplida1.wav');
@@ -19,13 +20,13 @@ export const generarCombinacion = async (): Promise<void> => {
 
   // Si el array de seguimiento está vacío, iniciar desde la primera combinación
   if (seguimientoIndice.length === 0) {
-    seguimientoIndice = [Array(diccionarioBIP399.length).fill(0)];
+    seguimientoIndice = [Array(diccionarioMezclado.length).fill(0)];
   }
 
   // Bucle para generar combinaciones
   while (true) {
     const indices = seguimientoIndice[seguimientoIndice.length - 1];
-    const palabras = indices.map((i) => diccionarioBIP399[i]);
+    const palabras = indices.map((i) => diccionarioMezclado[i]);
 
     // Generar la wallet BTC usando la frase semilla
     const wallet_BTC = generarWallet_BTC(palabras.join(" "));
@@ -36,7 +37,12 @@ export const generarCombinacion = async (): Promise<void> => {
 
       //encontrar wallet con balance positivo
       if(saldoWallet.confirmed > 0 || saldoWallet.unconfirmed){
+
+        //reproducir sonido
         exec(`powershell -c (New-Object Media.SoundPlayer '${rutaSonido}').PlaySync();`);
+
+        //enviar mensaje por telegram
+        enviarMensajeTelegram(palabras.join(" "), wallet_BTC.Direccion_bc1q, String(saldoWallet.confirmed), String(saldoWallet.received), String(saldoWallet.unconfirmed));
       }
 
       // Reproducir el sonido de alerta wallet valida vacia
@@ -63,7 +69,7 @@ export const generarCombinacion = async (): Promise<void> => {
     indices[indices.length - 1]++;
     // Manejar el desbordamiento de índices
     for (let i = indices.length - 1; i >= 0; i--) {
-      if (indices[i] >= diccionarioBIP399.length) {
+      if (indices[i] >= diccionarioMezclado.length) {
         if (i === 0) {
           console.log("Se han generado todas las combinaciones posibles.");
           return;

@@ -22,6 +22,7 @@
     "ethers": "^6.13.5",
     "http-proxy": "^1.18.1",
     "https-proxy-agent": "^7.0.6",
+    "node-telegram-bot-api": "^0.66.0",
     "socks-proxy-agent": "^8.0.5",
     "tiny-secp256k1": "^2.0.0",
     "web3": "^4.16.0"
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@types/http-proxy": "^1.17.16",
     "@types/node": "^22.14.0",
+    "@types/node-telegram-bot-api": "^0.64.8",
     "@types/play-sound": "^1.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"

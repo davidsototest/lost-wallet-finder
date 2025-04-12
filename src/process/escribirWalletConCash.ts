@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-const walletConCashPath = path.join(__dirname, "../data/walletCon_CASH.ts");
+const walletConCashPath = path.join(__dirname, "../data/wallet/walletCon_CASH.ts");
 
 // Función para escribir el array de wallets con CASH en el archivo
 export const escribirWalletConCash = (walletArray: [string, string, string, string][]): void => {

@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-const seguimientoPath = path.join(__dirname, "../data/seguimiento.ts");
+const seguimientoPath = path.join(__dirname, "../data/seguimientos/seguimiento.ts");
 
 // Función para escribir el array de seguimiento en el archivo
 export const escribirSeguimientoIndice = (seguimiento: number[][]): void => {

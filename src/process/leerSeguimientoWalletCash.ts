@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-const walletConCashPath = path.join(__dirname, "../data/walletCon_CASH.ts");
+const walletConCashPath = path.join(__dirname, "../data/wallet/walletCon_CASH.ts");
 
 // Función para leer el array de wallets con CASH desde el archivo
 export const leerSeguimientoWalletCash = (): [string, string, string, string][] => {
