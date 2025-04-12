@@ -1,0 +1,36 @@
+{
+  "name": "buscador-de-wallets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/bitcoinjs-lib": "^5.0.4",
+    "@types/tiny-secp256k1": "^2.0.1",
+    "axios": "^1.8.4",
+    "bip32": "^3.0.0",
+    "bip39": "^3.0.4",
+    "bitcoinjs-lib": "^6.1.0",
+    "buscador-de-wallets": "file:",
+    "dotenv": "^16.5.0",
+    "ethers": "^6.13.5",
+    "http-proxy": "^1.18.1",
+    "https-proxy-agent": "^7.0.6",
+    "socks-proxy-agent": "^8.0.5",
+    "tiny-secp256k1": "^2.0.0",
+    "web3": "^4.16.0"
+  },
+  "devDependencies": {
+    "@types/http-proxy": "^1.17.16",
+    "@types/node": "^22.14.0",
+    "@types/play-sound": "^1.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
