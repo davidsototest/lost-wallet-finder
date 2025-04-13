@@ -1,14 +1,14 @@
 import * as fs from "fs";
 import * as path from "path";
 
-const seguimientoPath = path.join(__dirname, "../data/seguimientos/seguimiento.ts");
+const seguimientoPath = path.join(__dirname, "../data/seguimientos/seguimiento.json");
 
-// Función para escribir el array de seguimiento en el archivo
-export const escribirSeguimientoIndice = (seguimiento: number[][]): void => {
-  const contenido = `export const seguimiento: number[][] = ${JSON.stringify(
-    seguimiento,
-    null,
-    2
-  )};\n`;
-  fs.writeFileSync(seguimientoPath, contenido, "utf-8");
+// Función para escribir el array de seguimiento (plano) en el archivo JSON
+export const escribirSeguimientoIndice = (seguimiento: number[]): void => {
+  try {
+    fs.writeFileSync(seguimientoPath, JSON.stringify(seguimiento, null, 2), "utf-8");
+
+  } catch (error) {
+    console.error("Error al escribir el archivo de seguimiento:", error);
+  }
 };

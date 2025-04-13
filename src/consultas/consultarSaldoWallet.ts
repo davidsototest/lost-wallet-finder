@@ -1,7 +1,6 @@
 import axios from "axios";
 import dotenv from "dotenv";
 import { setTimeout } from "timers/promises";
-import { getRandomUserAgent } from "../process/randomUserAgente";
 dotenv.config();
 
 interface WalletResponse {
@@ -11,21 +10,14 @@ interface WalletResponse {
   utxo: number;
   txs: number;
   received: number;
-}
-
-// Función para obtener un User-Agent aleatorio
-const userAgent = getRandomUserAgent();
-
-// lenguaje aleatorio
-const languages = ["en-US", "es-ES", "fr-FR", "de-DE", "zh-CN"];
-const acceptLanguage = languages[Math.floor(Math.random() * languages.length)];
+};
 
 // Creamos una instancia de Axios con configuración personalizada
 const axiosInstance = axios.create({
   headers: {
-    "Authorization": "Bearer BnjDLQ5rRtWCLnGM0KGOoXvGKFqwaGvzZIHQCDSLr54",
-    "User-Agent": userAgent,
-    "Accept-Language": acceptLanguage,
+    // "Authorization": "Bearer BnjDLQ5rRtWCLnGM0KGOoXvGKFqwaGvzZIHQCDSLr54",
+    "User-Agent": `Mozilla/5.0 (Windows NT 10.0; Win64; x64)`,
+    "Accept-Language": "en-US",
   },
 });
 
@@ -35,9 +27,7 @@ export const consultarSaldoWallet = async (address: string): Promise<WalletRespo
     const baseUrl = process.env.APIGETSALDOWALLET;
     if (!baseUrl) throw new Error("Variable de entorno no definida");
 
-    const response = await axiosInstance.get(`${baseUrl}/${address}/balance`, {
-      // params: { addr: address },
-    });
+    const response = await axiosInstance.get(`${baseUrl}/${address}/balance`);
     
     return response.data;
 

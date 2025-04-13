@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// index.ts
-const checker_1 = require("./process/checker");
-(0, checker_1.main)().catch((error) => {
-    console.error("Error executing main function:", error);
-});
+const combinar12Palabras_1 = require("./process/combinar12Palabras");
+const run = () => {
+    (0, combinar12Palabras_1.generarCombinacion)();
+};
+run();
