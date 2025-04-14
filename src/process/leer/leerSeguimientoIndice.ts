@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 // Rutas a los archivos
-const seguimientoPath = path.join(__dirname, "../data/seguimientos/seguimiento.json");
+const seguimientoPath = path.join(__dirname, "../../data/seguimientos/seguimiento.json");
 
 // Función para leer el array de seguimiento (combinaciones) desde el archivo
 export const leerSeguimientoIndice = (): number[] => {

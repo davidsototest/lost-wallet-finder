@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-const seguimientoPath = path.join(__dirname, "../data/seguimientos/seguimiento.json");
+const seguimientoPath = path.join(__dirname, "../../data/seguimientos/seguimiento.json");
 
 // Función para escribir el array de seguimiento (plano) en el archivo JSON
 export const escribirSeguimientoIndice = (seguimiento: number[]): void => {

@@ -1,13 +1,14 @@
 import * as path from "path";
-import { generarWallet_BTC } from "./generarWallet_BTC";
+import { generarWallet_BTC } from "./generarWalletsBTC/generarWallet_BTC";
 import { consultarSaldoWallet } from "../consultas/consultarSaldoWallet";
 import { exec } from "child_process";
-import { leerSeguimientoIndice } from "./leerSeguimientoIndice";
-import { leerSeguimientoWalletCash } from "./leerSeguimientoWalletCash";
-import { escribirSeguimientoIndice } from "./escribirSeguimientoIndice";
-import { escribirWalletConCash } from "./escribirWalletConCash";
+import { leerSeguimientoIndice } from "./leer/leerSeguimientoIndice";
+import { WalletConCashItem } from "./leer/leerSeguimientoWalletCash";
+import { escribirSeguimientoIndice } from "./guardar/escribirSeguimientoIndice";
+import { agregarWalletConCash } from "./guardar/escribirWalletConCash";
 import { diccionarioMezclado } from "../data/diccionario/diccionarioBIP39";
 import { enviarMensajeTelegram } from "./telegram/telegram";
+import { guardarSeguimientoHistorico } from "./guardar/guardarSeguimientoHistorico";
 
 //ruta del sonido
 const rutaSonido = path.join(__dirname, "../data/sonido/mision-cumplida1.wav");
@@ -16,7 +17,6 @@ const rutaSonido2 = path.join(__dirname, "../data/sonido/bell-sound-final.wav");
 // Función principal para generar combinaciones
 export const generarCombinacion = async (): Promise<void> => {
   let indices = leerSeguimientoIndice();
-  let walletConCash = leerSeguimientoWalletCash();
 
   // Bucle para generar combinaciones
   while (true) {
@@ -62,16 +62,15 @@ export const generarCombinacion = async (): Promise<void> => {
       );
 
       // Crear el nuevo registro: [fraseSemilla, funded_txo_sum, fechaCreacion]
-      const nuevoRegistro: [string, string, string, string] = [
-        semillas,
-        `confirmado: ${saldoWallet.confirmed}, recibido: ${saldoWallet.confirmed}, sin confirmar: ${saldoWallet.unconfirmed}`,
-        wallet_BTC.Direccion_bc1q,
-        new Date().toISOString(),
-      ];
+      let walletConCash: WalletConCashItem = {
+        frase: semillas,
+        estado: `confirmado: ${saldoWallet.confirmed}, recibido: ${saldoWallet.confirmed}, sin confirmar: ${saldoWallet.unconfirmed}`,
+        direccion: wallet_BTC.Direccion_bc1q,
+        fecha: new Date().toISOString()
+      };
 
-      // Agregar el nuevo registro al array en memoria y actualizar el archivo
-      walletConCash.push(nuevoRegistro);
-      escribirWalletConCash(walletConCash);
+      //guardar una nueva wallet con cash
+      await agregarWalletConCash(walletConCash);
     }
 
     console.log(
@@ -93,5 +92,6 @@ export const generarCombinacion = async (): Promise<void> => {
     };
 
     escribirSeguimientoIndice(indices);
+    guardarSeguimientoHistorico(indices);
   }
 };
