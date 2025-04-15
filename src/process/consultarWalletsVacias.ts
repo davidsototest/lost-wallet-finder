@@ -12,23 +12,27 @@ export const consultarWalletsVacias = async (): Promise<void> => {
   const wallets = leerSeguimientoWalletCash();
 
   for (const wallet of wallets) {
-    const { direccion_NativeSegWit, direccion_Taproot } = wallet;
+    const { 
+      direccion_NativeSegWit, 
+      // direccion_Taproot 
+    } = wallet;
     try {
       const resultado_NativeSegWit = await consultarSaldoWallet(direccion_NativeSegWit);
-      const resultado_Taproot = await consultarSaldoWallet(direccion_Taproot);
-      const emoji = resultado_NativeSegWit.confirmed > 0 || resultado_NativeSegWit.unconfirmed 
-                    || resultado_Taproot.confirmed > 0 || resultado_Taproot.unconfirmed > 0 ? "💊" : "";
+      // const resultado_Taproot = await consultarSaldoWallet(direccion_Taproot);
+      const emoji = resultado_NativeSegWit.confirmed > 0 || resultado_NativeSegWit.unconfirmed > 0 ? "💊" : "";
+                    // || resultado_Taproot.confirmed > 0 || resultado_Taproot.unconfirmed 
 
       console.log(`Dirección_NativeSegWit: ${direccion_NativeSegWit} ${emoji}`);
       console.log("Saldo Actual:", resultado_NativeSegWit.confirmed);
       console.log("Saldo Sin Confirmar:", resultado_NativeSegWit.unconfirmed);
-      console.log(`Dirección_Taproot: ${direccion_Taproot} ${emoji}`);
-      console.log("Saldo Actual:", resultado_Taproot.confirmed);
-      console.log("Saldo Sin Confirmar:", resultado_Taproot.unconfirmed);
+      // console.log(`Dirección_Taproot: ${direccion_Taproot} ${emoji}`);
+      // console.log("Saldo Actual:", resultado_Taproot.confirmed);
+      // console.log("Saldo Sin Confirmar:", resultado_Taproot.unconfirmed);
       console.log("----------------------------------------");
 
       if (resultado_NativeSegWit.confirmed > 0 || resultado_NativeSegWit.unconfirmed 
-          || resultado_Taproot.confirmed > 0 || resultado_Taproot.unconfirmed > 0 ) {
+          // || resultado_Taproot.confirmed > 0 || resultado_Taproot.unconfirmed > 0 
+        ) {
         //reproducir sonido
         exec(
           `powershell -c (New-Object Media.SoundPlayer '${rutaSonido}').PlaySync();`
@@ -41,10 +45,10 @@ export const consultarWalletsVacias = async (): Promise<void> => {
               saldoActual_NativeSegWit: resultado_NativeSegWit.confirmed,
               saldoSinConfirm_NativeSegWit: resultado_NativeSegWit.unconfirmed,
               saldoRecibido_NativeSegWit: resultado_NativeSegWit.received,
-              direccion_Taproot: wallet.direccion_Taproot,
-              saldoActual_Taproot: resultado_Taproot.confirmed,
-              saldoSinConfirm_Taproot: resultado_Taproot.unconfirmed,
-              saldoRecibido_Taproot: resultado_Taproot.received,
+              // direccion_Taproot: wallet.direccion_Taproot,
+              // saldoActual_Taproot: resultado_Taproot.confirmed,
+              // saldoSinConfirm_Taproot: resultado_Taproot.unconfirmed,
+              // saldoRecibido_Taproot: resultado_Taproot.received,
               fecha: new Date().toISOString()
             }
 

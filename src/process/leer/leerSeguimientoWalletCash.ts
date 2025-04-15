@@ -10,10 +10,10 @@ export interface WalletConCashItem {
   saldoActual_NativeSegWit: number,
   saldoSinConfirm_NativeSegWit: number,
   saldoRecibido_NativeSegWit: number,
-  direccion_Taproot: string;
-  saldoActual_Taproot: number,
-  saldoSinConfirm_Taproot: number,
-  saldoRecibido_Taproot: number,
+  // direccion_Taproot: string;
+  // saldoActual_Taproot: number,
+  // saldoSinConfirm_Taproot: number,
+  // saldoRecibido_Taproot: number,
   fecha: string;
 }
 

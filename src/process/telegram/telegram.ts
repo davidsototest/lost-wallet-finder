@@ -12,16 +12,9 @@ export const enviarMensajeTelegram = (msj: WalletConCashItem): void => {
                         👛 Wallet_NativeSegWit: 
                         ${msj.direccion_NativeSegWit}
                         ---------------
-                        👛 Wallet_Taproot: 
-                        ${msj.direccion_Taproot}
-                        ---------------
                         💰 Saldo actual_NativeSegWit: ${msj.saldoActual_NativeSegWit}
                         📥 Saldo recibido: ${msj.saldoRecibido_NativeSegWit}
                         ⏳ Saldo sin confirmar: ${msj.saldoSinConfirm_NativeSegWit}
-                        ---------------
-                        💰 Saldo actual_Taproot: ${msj.saldoActual_Taproot}
-                        📥 Saldo recibido: ${msj.saldoRecibido_Taproot}
-                        ⏳ Saldo sin confirmar: ${msj.saldoSinConfirm_Taproot}
                         `;
     bot
       .sendMessage(chatId, mensaje)
@@ -32,3 +25,23 @@ export const enviarMensajeTelegram = (msj: WalletConCashItem): void => {
         console.error("Error al enviar el mensaje:", error);
       });
   };
+
+
+
+  // `   📢 Semilla: 
+  //                       ${msj.frase}
+  //                       ---------------
+  //                       👛 Wallet_NativeSegWit: 
+  //                       ${msj.direccion_NativeSegWit}
+  //                       ---------------
+  //                       👛 Wallet_Taproot: 
+  //                       ${msj.direccion_Taproot}
+  //                       ---------------
+  //                       💰 Saldo actual_NativeSegWit: ${msj.saldoActual_NativeSegWit}
+  //                       📥 Saldo recibido: ${msj.saldoRecibido_NativeSegWit}
+  //                       ⏳ Saldo sin confirmar: ${msj.saldoSinConfirm_NativeSegWit}
+  //                       ---------------
+  //                       💰 Saldo actual_Taproot: ${msj.saldoActual_Taproot}
+  //                       📥 Saldo recibido: ${msj.saldoRecibido_Taproot}
+  //                       ⏳ Saldo sin confirmar: ${msj.saldoSinConfirm_Taproot}
+  //                       `;
