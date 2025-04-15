@@ -1,97 +1,99 @@
-import * as path from "path";
-import { generarWallet_BTC } from "./generarWalletsBTC/generarWallet_BTC";
-import { consultarSaldoWallet } from "../consultas/consultarSaldoWallet";
-import { exec } from "child_process";
-import { leerSeguimientoIndice } from "./leer/leerSeguimientoIndice";
-import { WalletConCashItem } from "./leer/leerSeguimientoWalletCash";
-import { escribirSeguimientoIndice } from "./guardar/escribirSeguimientoIndice";
-import { agregarWalletConCash } from "./guardar/escribirWalletConCash";
-import { diccionarioMezclado } from "../data/diccionario/diccionarioBIP39";
-import { enviarMensajeTelegram } from "./telegram/telegram";
-import { guardarSeguimientoHistorico } from "./guardar/guardarSeguimientoHistorico";
+// import * as path from "path";
+// import { generarWallet_BTC_NativeSegWit } from "./generarWalletsBTC/generarWallet_BTC_NativeSegWit";
+// import { consultarSaldoWallet } from "../consultas/consultarSaldoWallet";
+// import { exec } from "child_process";
+// import { leerSeguimientoIndice } from "./leer/leerSeguimientoIndice";
+// import { WalletConCashItem } from "./leer/leerSeguimientoWalletCash";
+// import { escribirSeguimientoIndice } from "./guardar/escribirSeguimientoIndice";
+// import { agregarWalletConCash } from "./guardar/escribirWalletConCash";
+// import { diccionarioMezclado } from "../data/diccionario/diccionarioBIP39";
+// import { enviarMensajeTelegram } from "./telegram/telegram";
+// import { guardarSeguimientoHistorico } from "./guardar/guardarSeguimientoHistorico";
 
-//ruta del sonido
-const rutaSonido = path.join(__dirname, "../data/sonido/mision-cumplida1.wav");
-const rutaSonido2 = path.join(__dirname, "../data/sonido/bell-sound-final.wav");
+// //ruta del sonido
+// const rutaSonido = path.join(__dirname, "../data/sonido/mision-cumplida1.wav");
+// const rutaSonido2 = path.join(__dirname, "../data/sonido/bell-sound-final.wav");
 
-// Función principal para generar combinaciones
-export const generarCombinacion = async (): Promise<void> => {
-  let indices = leerSeguimientoIndice();
+// // Función principal para generar combinaciones
+// export const generarCombinacion = async (): Promise<void> => {
+//   let indices = leerSeguimientoIndice();
 
-  // Bucle para generar combinaciones
-  while (true) {
+//   // Bucle para generar combinaciones
+//   while (true) {
 
-    //mapeo cada palabra segun el indice guardado
-    const palabras = indices.map((i) => diccionarioMezclado[i]);
+//     //mapeo cada palabra segun el indice guardado
+//     const palabras = indices.map((i) => diccionarioMezclado[i]);
 
-    //separo las palabras por un espacio
-    const semillas = palabras.join(" ");
+//     //separo las palabras por un espacio
+//     const semillas = palabras.join(" ");
 
-    // Generar la wallet BTC usando la frase semilla
-    const wallet_BTC = generarWallet_BTC(semillas);
+//     // Generar la wallet BTC usando la frase semilla
+//     const wallet_BTC = generarWallet_BTC_NativeSegWit(semillas);
 
-    // Consultar el saldo de la wallet
-    const saldoWallet = await consultarSaldoWallet(wallet_BTC.Direccion_bc1q);
+//     // Consultar el saldo de la wallet
+//     const saldoWallet = await consultarSaldoWallet(wallet_BTC.Direccion_bc1q);
 
-    //valido si el saldo actual, recibido o sin confirmar existe.
-    if (
-      saldoWallet.confirmed > 0 ||
-      saldoWallet.received > 0 ||
-      saldoWallet.unconfirmed > 0
-    ) {
-      //encontrar wallet con balance positivo o por confirmar
-      if (saldoWallet.confirmed > 0 || saldoWallet.unconfirmed) {
-        //reproducir sonido
-        exec(
-          `powershell -c (New-Object Media.SoundPlayer '${rutaSonido}').PlaySync();`
-        );
+//     //valido si el saldo actual, recibido o sin confirmar existe.
+//     if (
+//       saldoWallet.confirmed > 0 ||
+//       saldoWallet.received > 0 ||
+//       saldoWallet.unconfirmed > 0
+//     ) {
+//       //encontrar wallet con balance positivo o por confirmar
+//       if (saldoWallet.confirmed > 0 || saldoWallet.unconfirmed) {
+//         //reproducir sonido
+//         exec(
+//           `powershell -c (New-Object Media.SoundPlayer '${rutaSonido}').PlaySync();`
+//         );
 
-        //enviar mensaje por telegram
-        enviarMensajeTelegram(
-          semillas,
-          wallet_BTC.Direccion_bc1q,
-          String(saldoWallet.confirmed),
-          String(saldoWallet.received),
-          String(saldoWallet.unconfirmed)
-        );
-      }
+//         //enviar mensaje por telegram
+//         enviarMensajeTelegram(
+//           semillas,
+//           wallet_BTC.Direccion_bc1q,
+//           String(saldoWallet.confirmed),
+//           String(saldoWallet.received),
+//           String(saldoWallet.unconfirmed)
+//         );
+//       }
 
-      // Reproducir el sonido de alerta wallet valida vacia
-      exec(
-        `powershell -c (New-Object Media.SoundPlayer '${rutaSonido2}').PlaySync();`
-      );
+//       // Reproducir el sonido de alerta wallet valida vacia
+//       exec(
+//         `powershell -c (New-Object Media.SoundPlayer '${rutaSonido2}').PlaySync();`
+//       );
 
-      // Crear el nuevo registro: [fraseSemilla, funded_txo_sum, fechaCreacion]
-      let walletConCash: WalletConCashItem = {
-        frase: semillas,
-        estado: `confirmado: ${saldoWallet.confirmed}, recibido: ${saldoWallet.confirmed}, sin confirmar: ${saldoWallet.unconfirmed}`,
-        direccion: wallet_BTC.Direccion_bc1q,
-        fecha: new Date().toISOString()
-      };
+//       // Crear el nuevo registro: [fraseSemilla, funded_txo_sum, fechaCreacion]
+//       let walletConCash: WalletConCashItem = {
+//         frase: semillas,
+//         estado: `confirmado: ${saldoWallet.confirmed}, recibido: ${saldoWallet.confirmed}, sin confirmar: ${saldoWallet.unconfirmed}`,
+//         direccion: wallet_BTC.Direccion_bc1q,
+//         fecha: new Date().toISOString()
+//       };
 
-      //guardar una nueva wallet con cash
-      await agregarWalletConCash(walletConCash);
-    }
+//       //guardar una nueva wallet con cash
+//       await agregarWalletConCash(walletConCash);
+//     }
 
-    console.log(
-      `Wallet: ${wallet_BTC.Direccion_bc1q} > Saldo wallet: ${saldoWallet.confirmed}, Recibido: ${saldoWallet.received}, Sin confirmar: ${saldoWallet.unconfirmed}`
-    );
+//     console.log(
+//       `Wallet: ${wallet_BTC.Direccion_bc1q} > Saldo wallet: ${saldoWallet.confirmed}, Recibido: ${saldoWallet.received}, Sin confirmar: ${saldoWallet.unconfirmed}`
+//     );
 
-    // Incrementar como un contador en base diccionarioMezclado.length
-    for (let i = indices.length - 1; i >= 0; i--) {
-      indices[i]++;
-      if (indices[i] < diccionarioMezclado.length) {
-        break; // No hay overflow, salir
-      } else {
-        indices[i] = 0; // Resetear y seguir con el siguiente a la izquierda
-        if (i === 0) {
-          console.log("Se han generado todas las combinaciones posibles.");
-          return;
-        }
-      }
-    };
+//     // Incrementar como un contador en base diccionarioMezclado.length
+//     for (let i = indices.length - 1; i >= 0; i--) {
+//       indices[i]++;
+//       if (indices[i] < diccionarioMezclado.length) {
+//         break; // No hay overflow, salir
+//       } else {
+//         indices[i] = 0; // Resetear y seguir con el siguiente a la izquierda
+//         if (i === 0) {
+//           console.log("Se han generado todas las combinaciones posibles.");
+//           return;
+//         }
+//       }
+//     };
 
-    escribirSeguimientoIndice(indices);
-    guardarSeguimientoHistorico(indices);
-  }
-};
+//     escribirSeguimientoIndice(indices);
+//     guardarSeguimientoHistorico(indices);
+//   }
+// };
+
+export{}

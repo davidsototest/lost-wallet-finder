@@ -6,8 +6,14 @@ const walletConCashPath = path.join(__dirname, "../../data/wallet/walletCon_CASH
 // Tipo de los objetos en el JSON
 export interface WalletConCashItem {
   frase: string;
-  estado: string;
-  direccion: string;
+  direccion_NativeSegWit: string;
+  saldoActual_NativeSegWit: number,
+  saldoSinConfirm_NativeSegWit: number,
+  saldoRecibido_NativeSegWit: number,
+  direccion_Taproot: string;
+  saldoActual_Taproot: number,
+  saldoSinConfirm_Taproot: number,
+  saldoRecibido_Taproot: number,
   fecha: string;
 }
 

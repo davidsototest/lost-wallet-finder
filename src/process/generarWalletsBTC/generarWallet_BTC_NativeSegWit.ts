@@ -13,7 +13,7 @@ export interface WalletResult {
 }
 
 // Arrow function que recibe un string con las 12 palabras y retorna la wallet
-export const generarWallet_BTC = (mnemonic: string): WalletResult => {
+export const generarWallet_BTC_NativeSegWit = (mnemonic: string): WalletResult => {
 
   // Generar la semilla y la clave raíz
   const seed = bip39.mnemonicToSeedSync(mnemonic);

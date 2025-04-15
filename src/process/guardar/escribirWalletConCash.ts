@@ -1,14 +1,8 @@
 import * as fs from "fs";
 import * as path from "path";
+import { WalletConCashItem } from "../leer/leerSeguimientoWalletCash";
 
 const walletConCashPath = path.join(__dirname, "../../data/wallet/walletCon_CASH.json");
-
-export interface WalletConCashItem {
-  frase: string;
-  estado: string;
-  direccion: string;
-  fecha: string;
-};
 
 /// guardar wallets con cash en el json
 export const agregarWalletConCash = (nuevo: WalletConCashItem): void => {

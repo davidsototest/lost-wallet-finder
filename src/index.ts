@@ -1,4 +1,4 @@
-import { generarCombinacion } from "./process/combinar12Palabras";
+// import { generarCombinacion } from "./process/combinar12Palabras";
 import { generarCombinacionRandom } from "./process/combinar12PalabrasRandom";
 import { consultarWalletsVacias } from "./process/consultarWalletsVacias";
 
