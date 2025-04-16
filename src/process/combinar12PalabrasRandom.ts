@@ -10,7 +10,15 @@ import { generarWallet_BTC_NativeSegWit_P2WPKH } from "./generarWalletsBTC/gener
 import { generarWallet_BTC_Taproot } from "./generarWalletsBTC/generarWallet_BTC_Taproot";
 import { generarWallet_BTC_Legacy } from "./generarWalletsBTC/generarWallet_BTC_legacy";
 import { generarWallet_BTC_Wrapped_P2SH } from "./generarWalletsBTC/generarWallet_BTC_Wrapped_P2SH";
-// import { generarWallet_BTC_Taproot } from "./generarWalletsBTC/generarWallet_BTC_Taproot";
+import { fixedBox, screen } from "./dashboard/dashboard";
+
+
+// contador de wallets
+let walletsEscaneadas = 0;
+let walletsConSaldo = 0;
+let saldos = 0;
+
+// -------------------------------------------------------------
 
 // Configuración inicial
 const LONGITUD_DICCIONARIO = diccionarioMezclado.length;
@@ -84,12 +92,16 @@ export const generarCombinacionRandom = async (): Promise<void> => {
         ) {
         exec(`powershell -c (New-Object Media.SoundPlayer '${rutaSonido}').PlaySync();`);
         enviarMensajeTelegram(datosCompletos);
+        walletsConSaldo += 1;
+        saldos = saldoWallet_Legacy.confirmed + saldoWallet_NativeSegWit.confirmed + saldoWallet_Taproot.confirmed + saldoWallet_wrapped.confirmed
       }
 
       exec(`powershell -c (New-Object Media.SoundPlayer '${rutaSonido2}').PlaySync();`);
 
       await agregarWalletConCash(datosCompletos);
     }
+
+    walletsEscaneadas += 4;
 
     let emojiAlerta = saldoWallet_Legacy.confirmed > 0 
                       || saldoWallet_Legacy.unconfirmed > 0
@@ -109,6 +121,10 @@ export const generarCombinacionRandom = async (): Promise<void> => {
       ----------------------------------------------------------------------------------------------------------
       `
     );
+
+    fixedBox.setContent(`walletsEscaneadas = ${walletsEscaneadas} >> walletsConSaldo = ${walletsConSaldo} >> Saldo = ${saldos}`);
+    screen.render();
+    // console.log(generarMensajeLog(datosCompletos));
   }
 };
 
