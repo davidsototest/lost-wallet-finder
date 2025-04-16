@@ -1,0 +1,43 @@
+[
+    {
+      "tipo": "P2PKH (Legacy)",
+      "prefijo": "1",
+      "codificacion": "Base58",
+      "porcentaje_btc": "38%",
+      "btc_aproximado": "7.2M",
+      "estado": "En desuso (principalmente UTXOs antiguos)"
+    },
+    {
+      "tipo": "P2SH (Wrapped)",
+      "prefijo": "3",
+      "codificacion": "Base58",
+      "porcentaje_btc": "21%",
+      "btc_aproximado": "4.0M",
+      "estado": "Estable (multifirma y SegWit encapsulado)"
+    },
+    {
+      "tipo": "P2WPKH (SegWit)",
+      "prefijo": "bc1q",
+      "codificacion": "Bech32",
+      "porcentaje_btc": "32%",
+      "btc_aproximado": "6.1M",
+      "estado": "Dominante (transacciones diarias)"
+    },
+    {
+      "tipo": "P2WSH (SegWit)",
+      "prefijo": "bc1q",
+      "codificacion": "Bech32",
+      "porcentaje_btc": "6%",
+      "btc_aproximado": "1.1M",
+      "estado": "Creciente (contratos complejos)"
+    },
+    {
+      "tipo": "P2TR (Taproot)",
+      "prefijo": "bc1p",
+      "codificacion": "Bech32m",
+      "porcentaje_btc": "3%",
+      "btc_aproximado": "0.57M",
+      "estado": "Adopción acelerada (desde 2023)"
+    }
+  ]
+  

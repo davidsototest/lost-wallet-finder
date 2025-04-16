@@ -1,5 +1,4 @@
 import * as path from "path";
-import { generarWallet_BTC_NativeSegWit } from "./generarWalletsBTC/generarWallet_BTC_NativeSegWit";
 import { consultarSaldoWallet } from "../consultas/consultarSaldoWallet";
 import { exec } from "child_process";
 import { WalletConCashItem } from "./leer/leerSeguimientoWalletCash";
@@ -7,6 +6,10 @@ import { agregarWalletConCash } from "./guardar/escribirWalletConCash";
 import { diccionarioMezclado } from "../data/diccionario/diccionarioBIP39";
 import { enviarMensajeTelegram } from "./telegram/telegram";
 import { validateMnemonic } from "bip39-ts";
+import { generarWallet_BTC_NativeSegWit_P2WPKH } from "./generarWalletsBTC/generarWallet_BTC_NativeSegWit";
+import { generarWallet_BTC_Taproot } from "./generarWalletsBTC/generarWallet_BTC_Taproot";
+import { generarWallet_BTC_Legacy } from "./generarWalletsBTC/generarWallet_BTC_legacy";
+import { generarWallet_BTC_Wrapped_P2SH } from "./generarWalletsBTC/generarWallet_BTC_Wrapped_P2SH";
 // import { generarWallet_BTC_Taproot } from "./generarWalletsBTC/generarWallet_BTC_Taproot";
 
 // Configuración inicial
@@ -34,33 +37,50 @@ export const generarCombinacionRandom = async (): Promise<void> => {
     const semillas = generarFraseValida(); // <-- Solo frases válidas
 
     // generar wallet de nativeSegwit y Taproot
-    const wallet_BTC_NativeSegWit = generarWallet_BTC_NativeSegWit(semillas);
-    // const wallet_BTC_Taproot = generarWallet_BTC_Taproot(semillas);
+    const wallet_BTC_Legacy = generarWallet_BTC_Legacy(semillas);
+    const wallet_BTC_NativeSegWit = generarWallet_BTC_NativeSegWit_P2WPKH(semillas);
+    const wallet_BTC_Taproot = generarWallet_BTC_Taproot(semillas);
+    const wallet_BTC_wrapped = generarWallet_BTC_Wrapped_P2SH(semillas);
+    
 
     // consultar saldo de ambas
-    const saldoWallet_NativeSegWit = await consultarSaldoWallet(wallet_BTC_NativeSegWit.Direccion_bc1q);
-    // const saldoWallet_Taproot = await consultarSaldoWallet(wallet_BTC_Taproot.Direccion_bc1p);
+    const saldoWallet_Legacy = await consultarSaldoWallet(wallet_BTC_Legacy.Direccion);
+    const saldoWallet_NativeSegWit = await consultarSaldoWallet(wallet_BTC_NativeSegWit.Direccion);
+    const saldoWallet_Taproot = await consultarSaldoWallet(wallet_BTC_Taproot.Direccion);
+    const saldoWallet_wrapped = await consultarSaldoWallet(wallet_BTC_wrapped.Direccion);
 
     //armo el objeto que todos necesitan
     const datosCompletos: WalletConCashItem = {
       frase: semillas,
-      direccion_NativeSegWit: wallet_BTC_NativeSegWit.Direccion_bc1q,
+      direccion_legacy: wallet_BTC_Legacy.Direccion,
+      saldoActual_legacy: saldoWallet_Legacy.confirmed,
+      saldoSinConfirm_legacy: saldoWallet_Legacy.unconfirmed,
+      saldoRecibido_legacy: saldoWallet_Legacy.received,
+      direccion_NativeSegWit: wallet_BTC_NativeSegWit.Direccion,
       saldoActual_NativeSegWit: saldoWallet_NativeSegWit.confirmed,
       saldoSinConfirm_NativeSegWit: saldoWallet_NativeSegWit.unconfirmed,
       saldoRecibido_NativeSegWit: saldoWallet_NativeSegWit.received,
-      // direccion_Taproot: wallet_BTC_Taproot.Direccion_bc1p,
-      // saldoActual_Taproot: saldoWallet_Taproot.confirmed,
-      // saldoSinConfirm_Taproot: saldoWallet_Taproot.unconfirmed,
-      // saldoRecibido_Taproot: saldoWallet_Taproot.received,
+      direccion_Taproot: wallet_BTC_Taproot.Direccion,
+      saldoActual_Taproot: saldoWallet_Taproot.confirmed,
+      saldoSinConfirm_Taproot: saldoWallet_Taproot.unconfirmed,
+      saldoRecibido_Taproot: saldoWallet_Taproot.received,
+      direccion_wrapped: wallet_BTC_wrapped.Direccion,
+      saldoActual_wrapped: saldoWallet_wrapped.confirmed,
+      saldoSinConfirm_wrapped: saldoWallet_wrapped.unconfirmed,
+      saldoRecibido_wrapped: saldoWallet_wrapped.received,
       fecha: new Date().toISOString()
     }
 
-    if (saldoWallet_NativeSegWit.confirmed > 0 || saldoWallet_NativeSegWit.received > 0 || saldoWallet_NativeSegWit.unconfirmed > 0
-        // || saldoWallet_Taproot.confirmed > 0 || saldoWallet_Taproot.received > 0 || saldoWallet_Taproot.unconfirmed > 0 
+    if ( saldoWallet_Legacy.confirmed > 0 || saldoWallet_Legacy.received > 0 || saldoWallet_Legacy.unconfirmed > 0
+        || saldoWallet_NativeSegWit.confirmed > 0 || saldoWallet_NativeSegWit.received > 0 || saldoWallet_NativeSegWit.unconfirmed > 0
+        || saldoWallet_Taproot.confirmed > 0 || saldoWallet_Taproot.received > 0 || saldoWallet_Taproot.unconfirmed > 0 
+        || saldoWallet_wrapped.confirmed > 0 || saldoWallet_wrapped.received > 0 || saldoWallet_wrapped.unconfirmed > 0
       ) {
 
-      if (saldoWallet_NativeSegWit.confirmed > 0 || saldoWallet_NativeSegWit.unconfirmed > 0  
-        // || saldoWallet_Taproot.confirmed > 0 || saldoWallet_Taproot.unconfirmed > 0
+      if ( saldoWallet_Legacy.confirmed > 0 || saldoWallet_Legacy.unconfirmed > 0
+        || saldoWallet_NativeSegWit.confirmed > 0 || saldoWallet_NativeSegWit.unconfirmed > 0  
+        || saldoWallet_Taproot.confirmed > 0 || saldoWallet_Taproot.unconfirmed > 0
+        || saldoWallet_wrapped.confirmed > 0 || saldoWallet_wrapped.unconfirmed > 0
         ) {
         exec(`powershell -c (New-Object Media.SoundPlayer '${rutaSonido}').PlaySync();`);
         enviarMensajeTelegram(datosCompletos);
@@ -71,15 +91,25 @@ export const generarCombinacionRandom = async (): Promise<void> => {
       await agregarWalletConCash(datosCompletos);
     }
 
+    let emojiAlerta = saldoWallet_Legacy.confirmed > 0 
+                      || saldoWallet_Legacy.unconfirmed > 0
+                      || saldoWallet_NativeSegWit.confirmed > 0
+                      || saldoWallet_NativeSegWit.unconfirmed > 0
+                      || saldoWallet_Taproot.confirmed > 0
+                      || saldoWallet_Taproot.unconfirmed > 0
+                      || saldoWallet_wrapped.confirmed > 0
+                      || saldoWallet_wrapped.unconfirmed > 0 ? "⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡" : ""
+
     console.log(
-      `Wallet_NativeSegWit: ${wallet_BTC_NativeSegWit.Direccion_bc1q} > Saldo: ${saldoWallet_NativeSegWit.confirmed}, Recibido: ${saldoWallet_NativeSegWit.received}, Sin confirmar: ${saldoWallet_NativeSegWit.unconfirmed}`
+      `${emojiAlerta}
+      - Wallet_Legacy: ${wallet_BTC_Legacy.Direccion} > Saldo: ${saldoWallet_Legacy.confirmed}, Recibido: ${saldoWallet_Legacy.received}, Sin confirmar: ${saldoWallet_Legacy.unconfirmed}
+      - Wallet_NativeSegWit: ${wallet_BTC_NativeSegWit.Direccion} > Saldo: ${saldoWallet_NativeSegWit.confirmed}, Recibido: ${saldoWallet_NativeSegWit.received}, Sin confirmar: ${saldoWallet_NativeSegWit.unconfirmed}
+      - Wallet_Taproot: ${wallet_BTC_Taproot.Direccion} > Saldo: ${saldoWallet_Taproot.confirmed}, Recibido: ${saldoWallet_Taproot.received}, Sin confirmar: ${saldoWallet_Taproot.unconfirmed}
+      - Wallet_wrapped: ${wallet_BTC_wrapped.Direccion} > Saldo: ${saldoWallet_wrapped.confirmed}, Recibido: ${saldoWallet_wrapped.received}, Sin confirmar: ${saldoWallet_wrapped.unconfirmed}
+      ----------------------------------------------------------------------------------------------------------
+      `
     );
   }
 };
 
 
-// `
-//       Wallet_NativeSegWit: ${wallet_BTC_NativeSegWit.Direccion_bc1q} > Saldo: ${saldoWallet_NativeSegWit.confirmed}, Recibido: ${saldoWallet_NativeSegWit.received}, Sin confirmar: ${saldoWallet_NativeSegWit.unconfirmed}
-//       // Wallet_Taproot: ${wallet_BTC_Taproot.Direccion_bc1p} > Saldo: ${saldoWallet_Taproot.confirmed}, Recibido: ${saldoWallet_Taproot.received}, Sin confirmar: ${saldoWallet_Taproot.unconfirmed}
-//       ----------------------------------------------------------------------------------------------------------
-//       `

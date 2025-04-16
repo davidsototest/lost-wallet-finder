@@ -2,20 +2,15 @@ import * as bip39 from "bip39";
 import { BIP32Factory } from "bip32";
 import * as ecc from "tiny-secp256k1";
 import * as bitcoin from "bitcoinjs-lib";
+import { WalletResult } from "./generarWallet_BTC_NativeSegWit";
 
 const bip32 = BIP32Factory(ecc);
 bitcoin.initEccLib(ecc);
 
 const NETWORK = bitcoin.networks.bitcoin;
 
-// Interfaz para el resultado
-export interface WalletResultTaproot {
-  Direccion_bc1p: string;
-  Clave_privada: string;
-}
-
 // Función que recibe una frase mnemotécnica y retorna la billetera Taproot
-export const generarWallet_BTC_Taproot = (mnemonic: string): WalletResultTaproot => {
+export const generarWallet_BTC_Taproot = (mnemonic: string): WalletResult => {
   // Validar la frase mnemotécnica
   if (!bip39.validateMnemonic(mnemonic)) {
     throw new Error("Frase mnemotécnica inválida");
@@ -43,7 +38,7 @@ export const generarWallet_BTC_Taproot = (mnemonic: string): WalletResultTaproot
   }
 
   return {
-    Direccion_bc1p: address,
+    Direccion: address,
     Clave_privada: child.toWIF(),
   };
 };
