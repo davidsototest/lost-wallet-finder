@@ -5,6 +5,7 @@ import { leerSeguimientoWalletCash, WalletConCashItem } from "./leer/leerSeguimi
 import { enviarMensajeTelegram } from "./telegram/telegram";
 import { ValidarCeroEmoji } from "./emoji/validarCero";
 
+//ruta del sonido
 const rutaSonido = path.join(__dirname, "../data/sonido/mision-cumplida1.wav");
 
 //funcion para sonsultar las wallets que ubicamos, pero vacias
@@ -38,7 +39,7 @@ export const consultarWalletsVacias = async (): Promise<void> => {
       console.log(`Dirección_Wrapped: ${direccion_wrapped}`);
       console.log("Saldo Actual:", resultado_wrapped.confirmed, ValidarCeroEmoji(resultado_wrapped.confirmed));
       console.log("Saldo Sin Confirmar:", resultado_wrapped.unconfirmed, ValidarCeroEmoji(resultado_wrapped.unconfirmed));
-      console.log("----------------------------------------");
+      console.log("----------------------------------------"); 
 
       if ( resultado_Legacy.confirmed > 0 || resultado_Legacy.unconfirmed > 0
           || resultado_NativeSegWit.confirmed > 0 || resultado_NativeSegWit.unconfirmed 

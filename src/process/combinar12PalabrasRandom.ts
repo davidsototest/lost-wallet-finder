@@ -125,7 +125,7 @@ export const generarCombinacionRandom = async (): Promise<void> => {
     fixedBox.setContent(`walletsEscaneadas = ${walletsEscaneadas} >> walletsConSaldo = ${walletsConSaldo} >> Saldo = ${saldos}`);
     screen.render();
     // console.log(generarMensajeLog(datosCompletos));
-  }
+  } 
 };
 
 
