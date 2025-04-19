@@ -1,4 +1,4 @@
-//dicionario test
+//dicionario test BTC
 export const diccionarioMezclado1: string[] = [
     "quiz",
     "inch",
@@ -16,6 +16,39 @@ export const diccionarioMezclado1: string[] = [
     "donal"
   ];
 
+  //dicionario test TRON con saldo
+export const diccionarioMezclado3: string[] = [
+  "picture",
+  "baby",
+  "neither",
+  "organ",
+  "finger",
+  "crew",
+  "forward",
+  "client",
+  "render",
+  "such",
+  "social",
+  "move",
+  "zoo" 
+];
+
+  //dicionario test TRON SIN saldo
+  export const diccionarioMezclado2: string[] = [
+    "cage",
+    "hand",
+    "short",
+    "captain",
+    "jar",
+    "entire",
+    "daring",
+    "permit",
+    "thing",
+    "rifle",
+    "rebuild",
+    "sick",
+    "move"
+  ]
 
 // diccionario mezclado
 export const diccionarioMezclado: string[] = [

