@@ -21,7 +21,7 @@ export const generarWallets_TRON = (mnemonic: string) => {
   const ACCOUNT   = 0   + 0x80000000;
   const CHANGE    = 0;
 
-  for (let n = 0; n < 10; n++) {
+  for (let n = 0; n < 1; n++) {
     const node = root
       .derive(PURPOSE)
       .derive(COIN_TYPE)
