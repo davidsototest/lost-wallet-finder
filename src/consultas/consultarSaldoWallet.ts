@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import { setTimeout } from "timers/promises";
 dotenv.config();
 
-interface WalletResponse {
+export interface WalletResponseBTC {
   address: string;
   confirmed: number;
   unconfirmed: number;
@@ -22,7 +22,7 @@ const axiosInstance = axios.create({
 });
 
 // Función asíncrona que recibe una dirección y consulta el API
-export const consultarSaldoWallet = async (address: string): Promise<WalletResponse> => {
+export const consultarSaldoWallet = async (address: string): Promise<WalletResponseBTC> => {
   try {
     const baseUrl = process.env.APIGETSALDOWALLET;
     if (!baseUrl) throw new Error("Variable de entorno no definida");

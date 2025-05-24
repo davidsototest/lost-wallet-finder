@@ -1,55 +1,33 @@
+import { contador, walletsConCashVar } from "../..";
 import { consultarSaldoWallet } from "../../consultas/consultarSaldoWallet";
-import {
-  rutaSonido,
-  rutaSonido2,
-} from "../combinar12Palabras";
-import {
-  generarWallet_BTC_NativeSegWit_P2WPKH,
-} from "../generarWalletsBTC/generarWallet_BTC_NativeSegWit";
-import { exec } from "child_process";
-import { enviarMensajeTelegram } from "../telegram/telegram";
-import { agregarWalletConCash } from "../guardar/escribirWalletConCash";
+import { generarWallet_BTC_NativeSegWit_P2WPKH } from "../generarWalletsBTC/generarWallet_BTC_NativeSegWit";
+import { generarWallet_BTC_Legacy } from "../generarWalletsBTC/generarWallet_BTC_legacy";
+import { ValidarSaldoWallet } from "../validarElSaldo/ValidarSaldo";
 
 
 // funcion para procesar todo de BTC
 export const procesar_BTC = async (semillas: string): Promise<void> => {
+
   // generar wallets
-  const wallet_BTC = generarWallet_BTC_NativeSegWit_P2WPKH(semillas);
+  const wallet_BTC_sergit = generarWallet_BTC_NativeSegWit_P2WPKH(semillas);
+  const wallet_BTC_legacy = generarWallet_BTC_Legacy(semillas);
+
+  // console.log(semillas);
 
   // consultar saldo de ambas
-  const saldoWallet_BTC = await consultarSaldoWallet(wallet_BTC.Direccion);
+  const saldoWallet_BTC_sergit = await consultarSaldoWallet(wallet_BTC_sergit.Direccion);
+  const saldoWallet_BTC_legacy = await consultarSaldoWallet(wallet_BTC_legacy.Direccion);
 
-  //objeto BTC
-  const datos_BTC = {
-    frase: semillas,
-    wallet_de: "BTC",
-    direccion: wallet_BTC.Direccion,
-    saldo: `confi: ${saldoWallet_BTC.confirmed}, unconf: ${saldoWallet_BTC.unconfirmed}`,
-    fecha: new Date().toISOString(),
-  };
 
-  //valido si el saldo actual, recibido o sin confirmar existe.
-  if (
-    saldoWallet_BTC.confirmed > 0 ||
-    saldoWallet_BTC.received > 0 ||
-    saldoWallet_BTC.unconfirmed > 0
-  ) {
-    //encontrar wallet con balance positivo o por confirmar
-    if (saldoWallet_BTC.confirmed > 0 || saldoWallet_BTC.unconfirmed > 0) {
-      //reproducir sonido
-      exec(`powershell -c (New-Object Media.SoundPlayer '${rutaSonido}').PlaySync();`);
+  //valido los saldos, guardo y aviso
+  await ValidarSaldoWallet(saldoWallet_BTC_sergit, semillas, wallet_BTC_sergit);
+  await ValidarSaldoWallet(saldoWallet_BTC_legacy, semillas, wallet_BTC_legacy);
 
-      //enviar por telegram
-      await enviarMensajeTelegram(datos_BTC);
+  console.clear();
+  console.log(`Wallets consultadas: ${contador}`);
+  console.log(`Wallets con saldo: ${walletsConCashVar}`);
+  // console.log(`Wallet_Legacy: ${wallet_BTC_legacy.Direccion} > Saldo: ${saldoWallet_BTC_legacy.confirmed + saldoWallet_BTC_legacy.unconfirmed}`);
+  // console.log(`Wallet_Sergit: ${wallet_BTC_sergit.Direccion} > Saldo: ${saldoWallet_BTC_sergit.confirmed + saldoWallet_BTC_sergit.unconfirmed}`);
+  // console.log("----------------------------------------------------------------");
 
-    }
-
-    // Reproducir el sonido de alerta wallet valida vacia
-    exec(`powershell -c (New-Object Media.SoundPlayer '${rutaSonido2}').PlaySync();`);
-
-    await agregarWalletConCash(datos_BTC);
-  }
-
-  console.log(`Wallet_BTC: ${wallet_BTC.Direccion} > Saldo: ${saldoWallet_BTC.confirmed + saldoWallet_BTC.unconfirmed}
-----------------------------------------------------------`);
 };

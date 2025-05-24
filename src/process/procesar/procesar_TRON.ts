@@ -50,7 +50,7 @@ export const procesar_TRON = async (semillas: string): Promise<void> => {
                   await agregarWalletConCash(datos_TRON);
               };
         
-              console.log(`Wallet_TRON: ${wallet_TRON.Direccion} > balance: ${saldoWallet.balance} > ${contadorWallets}`);
+              // console.log(`Wallet_TRON: ${wallet_TRON.Direccion} > balance: ${saldoWallet.balance} > ${contadorWallets}`);
 
         }
           
