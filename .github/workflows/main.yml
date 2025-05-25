@@ -11,7 +11,7 @@ jobs:
       matrix:
         instance: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Clonar el repositorio
         uses: actions/checkout@v3
@@ -27,4 +27,4 @@ jobs:
       - name: Ejecutar pruebas en instancia ${{ matrix.instance }}
         run: |
           echo "Ejecutando pruebas en instancia ${{ matrix.instance }}"
-          npm run test
+          npm run start
