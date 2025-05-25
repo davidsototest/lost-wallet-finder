@@ -24,7 +24,7 @@ jobs:
       - name: Instalar dependencias
         run: npm install
 
-      - name: Ejecutar pruebas en instancia ${{ matrix.instance }}
+      - name: Ejecutar pruebas en instancia ${{ matrix.instance }} 
         run: |
           echo "Ejecutando pruebas en instancia ${{ matrix.instance }}"
           npm run start
