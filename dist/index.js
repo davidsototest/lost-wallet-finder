@@ -22,7 +22,8 @@ const run = async () => {
     // velocidad por dos
     await Promise.all([
         (0, combinar12PalabrasRandom_1.generarCombinacionRandomII)(),
-        // generarCombinacion(),
+        (0, combinar12PalabrasRandom_1.generarCombinacionRandomII)(),
+        (0, combinar12PalabrasRandom_1.generarCombinacionRandomII)(),
         (0, combinar12PalabrasRandom_1.generarCombinacionRandomII)(),
         (0, combinar12PalabrasRandom_1.generarCombinacionRandomII)(),
         (0, combinar12PalabrasRandom_1.generarCombinacionRandomII)()

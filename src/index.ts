@@ -24,7 +24,8 @@ const run = async (): Promise<void> => {
   // velocidad por dos
   await Promise.all([
     generarCombinacionRandomII(),
-    // generarCombinacion(),
+    generarCombinacionRandomII(),
+    generarCombinacionRandomII(),
     generarCombinacionRandomII(),
     generarCombinacionRandomII(),
     generarCombinacionRandomII()
