@@ -1,0 +1,27 @@
+"use strict";
+const redes = [
+    "Arbitrum",
+    "Aurora",
+    "Avalnche C-Chain",
+    "BNB Smart Chain",
+    "Base",
+    "Bitcoin",
+    "Bitcoin Cash",
+    "Blast",
+    "Celo",
+    "Cosmos Hub",
+    "Dogecoin",
+    "Ethereum",
+    "Fanton",
+    "Linea",
+    "Litecoin",
+    "OP Mainnet",
+    "Polygon",
+    "Scroll",
+    "Solana",
+    "THORChain",
+    "TON",
+    "Tron",
+    "XRP",
+    "skSyncEra"
+];
