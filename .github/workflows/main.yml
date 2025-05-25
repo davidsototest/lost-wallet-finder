@@ -21,5 +21,8 @@ jobs:
       - name: Instalar dependencias
         run: npm install
 
+      - name: Compilar TypeScript
+        run: npm run build
+
       - name: Iniciar la aplicación
         run: npm run start
