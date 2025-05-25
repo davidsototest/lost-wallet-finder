@@ -1,0 +1,25 @@
+name: Ejecutar aplicación TypeScript
+
+on:
+  push:
+    branches:
+      - main  # O la rama que utilices
+
+jobs:
+  build-and-start:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'  # Ajusta según la versión que necesites
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Iniciar la aplicación
+        run: npm run start
