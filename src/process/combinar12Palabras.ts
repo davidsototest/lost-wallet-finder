@@ -50,7 +50,7 @@ export const generarCombinacion = async (): Promise<void> => {
     //procesar todo de BTC y TRON
     await Promise.all([
       procesar_BTC(semillas),
-      procesar_TRON(semillas),
+      // procesar_TRON(semillas),
     ]);
 
     // Incrementar como un contador en base diccionarioMezclado.length

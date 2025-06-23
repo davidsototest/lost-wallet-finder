@@ -1,8 +1,7 @@
 
-// import { generarCombinacion } from "./process/combinar12Palabras";
+import { generarCombinacion } from "./process/combinar12Palabras";
 import { generarCombinacionRandomII } from './process/combinar12PalabrasRandom';
 import { consultarWalletsVacias } from "./process/consultarWalletsVacias";
-
 
 // sumar las wallets con cash
 export let walletsConCashVar = 0;
@@ -24,14 +23,17 @@ const run = async (): Promise<void> => {
   // velocidad por dos
   await Promise.all([
     generarCombinacionRandomII(),
-    // generarCombinacion(),
+    generarCombinacion(),
     generarCombinacionRandomII(),
     generarCombinacionRandomII(),
-    generarCombinacionRandomII()
+    generarCombinacionRandomII(),
+    generarCombinacionRandomII(),
+    generarCombinacionRandomII(),
+    generarCombinacionRandomII(),
+    generarCombinacionRandomII(),
   ]);
-
-  // llama a la funcion de generar combinaciones ordenadas
-  // await generarCombinacion();
 };
 
 run();
+
+

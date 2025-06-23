@@ -1,3 +1,4 @@
+
 import { contador, walletsConCashVar } from "../..";
 import { consultarSaldoWallet } from "../../consultas/consultarSaldoWallet";
 import { generarWallet_BTC_NativeSegWit_P2WPKH } from "../generarWalletsBTC/generarWallet_BTC_NativeSegWit";
@@ -28,6 +29,6 @@ export const procesar_BTC = async (semillas: string): Promise<void> => {
   console.log(`Wallets con saldo: ${walletsConCashVar}`);
   // console.log(`Wallet_Legacy: ${wallet_BTC_legacy.Direccion} > Saldo: ${saldoWallet_BTC_legacy.confirmed + saldoWallet_BTC_legacy.unconfirmed}`);
   // console.log(`Wallet_Sergit: ${wallet_BTC_sergit.Direccion} > Saldo: ${saldoWallet_BTC_sergit.confirmed + saldoWallet_BTC_sergit.unconfirmed}`);
-  // console.log("----------------------------------------------------------------");
+  console.log("----------------------------------------------------------------");
 
 };

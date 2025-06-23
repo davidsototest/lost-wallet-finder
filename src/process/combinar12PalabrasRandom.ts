@@ -28,7 +28,7 @@ export const generarCombinacionRandomII = async (): Promise<void> => {
     //procesar todo de BTC y TRON
     await Promise.all([
       procesar_BTC(semillas),
-      procesar_TRON(semillas),
+      //procesar_TRON(semillas),
     ]);
   }
 };
