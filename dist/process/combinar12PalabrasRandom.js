@@ -36,6 +36,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.generarCombinacionRandomII = exports.rutaSonido2 = exports.rutaSonido = void 0;
 const path = __importStar(require("path"));
 const procesar_BTC_1 = require("./procesar/procesar_BTC");
+//import { procesar_TRON } from "./procesar/procesar_TRON";
 const generarFraseValida_1 = require("./generarFrase/generarFraseValida");
 const __1 = require("..");
 //ruta del sonido
@@ -54,7 +55,7 @@ const generarCombinacionRandomII = async () => {
         //procesar todo de BTC y TRON
         await Promise.all([
             (0, procesar_BTC_1.procesar_BTC)(semillas),
-            // procesar_TRON(semillas),
+            //procesar_TRON(semillas),
         ]);
     }
 };

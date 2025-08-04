@@ -1,7 +1,8 @@
 
-import { generarCombinacion } from "./process/combinar12Palabras";
+//import { generarCombinacion } from "./process/combinar12Palabras";
 import { generarCombinacionRandomII } from './process/combinar12PalabrasRandom';
 import { consultarWalletsVacias } from "./process/consultarWalletsVacias";
+import { enviarMensajeTelegramStart } from "./process/telegram/telegram";
 
 // sumar las wallets con cash
 export let walletsConCashVar = 0;
@@ -20,10 +21,13 @@ const run = async (): Promise<void> => {
   // Llama a la función que consulta wallets vacías 
   await consultarWalletsVacias();
 
+    // Notificar inicio del bot
+  enviarMensajeTelegramStart("Ah iniciado exitoxamente...");
+
   // velocidad por dos
   await Promise.all([
     generarCombinacionRandomII(),
-    generarCombinacion(),
+   // generarCombinacion(),
     generarCombinacionRandomII(),
     generarCombinacionRandomII(),
     generarCombinacionRandomII(),

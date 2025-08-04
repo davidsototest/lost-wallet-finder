@@ -12,11 +12,11 @@ dotenv_1.default.config();
 ;
 // mis apikey
 const apiKeys = [
-    process.env.TRONSCAN_APIKEY1,
-    process.env.TRONSCAN_APIKEY2,
-    process.env.TRONSCAN_APIKEY3,
-    process.env.TRONSCAN_APIKEY4,
-    process.env.TRONSCAN_APIKEY5,
+    process.env.XTRONSCAN_APIKEY1,
+    process.env.XTRONSCAN_APIKEY2,
+    process.env.XTRONSCAN_APIKEY3,
+    process.env.XTRONSCAN_APIKEY4,
+    process.env.XTRONSCAN_APIKEY5,
 ];
 let apiKeyIndex = 0;
 //alternar las apikey

@@ -41,7 +41,6 @@ const escribirSeguimientoIndice_1 = require("./guardar/escribirSeguimientoIndice
 const diccionarioBIP39_1 = require("../data/diccionario/diccionarioBIP39");
 const guardarSeguimientoHistorico_1 = require("./guardar/guardarSeguimientoHistorico");
 const procesar_BTC_1 = require("./procesar/procesar_BTC");
-const procesar_TRON_1 = require("./procesar/procesar_TRON");
 //ruta del sonido
 exports.rutaSonido = path.join(__dirname, "../data/sonido/mision-cumplida1.wav");
 exports.rutaSonido2 = path.join(__dirname, "../data/sonido/bell-sound-final.wav");
@@ -80,7 +79,7 @@ const generarCombinacion = async () => {
         //procesar todo de BTC y TRON
         await Promise.all([
             (0, procesar_BTC_1.procesar_BTC)(semillas),
-            (0, procesar_TRON_1.procesar_TRON)(semillas),
+            // procesar_TRON(semillas),
         ]);
         // Incrementar como un contador en base diccionarioMezclado.length
         for (let i = indices.length - 1; i >= 0; i--) {

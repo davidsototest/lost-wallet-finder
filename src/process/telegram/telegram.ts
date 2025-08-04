@@ -23,3 +23,17 @@ export const enviarMensajeTelegram = (msj: WalletConCashItem): void => {
         console.error("Error al enviar el mensaje:", error);
       });
   };
+
+  export const enviarMensajeTelegramStart = (msj: string): void => {
+    const mensaje = `   📢 El Bot: 
+                        ${msj}
+                        `;
+      bot
+      .sendMessage(chatId, mensaje)
+      .then(() => {
+        console.log("Mensaje enviado con éxito 📢");
+      })
+      .catch((error) => {
+        console.error("Error al enviar el mensaje:", error);
+      });
+  };

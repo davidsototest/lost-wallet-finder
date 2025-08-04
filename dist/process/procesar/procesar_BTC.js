@@ -23,6 +23,6 @@ const procesar_BTC = async (semillas) => {
     console.log(`Wallets con saldo: ${__1.walletsConCashVar}`);
     // console.log(`Wallet_Legacy: ${wallet_BTC_legacy.Direccion} > Saldo: ${saldoWallet_BTC_legacy.confirmed + saldoWallet_BTC_legacy.unconfirmed}`);
     // console.log(`Wallet_Sergit: ${wallet_BTC_sergit.Direccion} > Saldo: ${saldoWallet_BTC_sergit.confirmed + saldoWallet_BTC_sergit.unconfirmed}`);
-    // console.log("----------------------------------------------------------------");
+    console.log("----------------------------------------------------------------");
 };
 exports.procesar_BTC = procesar_BTC;

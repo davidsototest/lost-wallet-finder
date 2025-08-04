@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.enviarMensajeTelegram = void 0;
+exports.enviarMensajeTelegramStart = exports.enviarMensajeTelegram = void 0;
 const node_telegram_bot_api_1 = __importDefault(require("node-telegram-bot-api"));
 const token = "7943951367:AAG0X-lhN4kkIaR0oLV-63ZWwgwfgqisTOs";
 const bot = new node_telegram_bot_api_1.default(token, { polling: false });
@@ -27,3 +27,17 @@ const enviarMensajeTelegram = (msj) => {
     });
 };
 exports.enviarMensajeTelegram = enviarMensajeTelegram;
+const enviarMensajeTelegramStart = (msj) => {
+    const mensaje = `   📢 El Bot: 
+                        ${msj}
+                        `;
+    bot
+        .sendMessage(chatId, mensaje)
+        .then(() => {
+        console.log("Mensaje enviado con éxito 📢");
+    })
+        .catch((error) => {
+        console.error("Error al enviar el mensaje:", error);
+    });
+};
+exports.enviarMensajeTelegramStart = enviarMensajeTelegramStart;
