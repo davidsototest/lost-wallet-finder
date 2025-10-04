@@ -1,9 +1,7 @@
-import { WalletResponseBTC } from "../../consultas/consultarSaldoWallet";
+import { WalletResponseBTC } from "../../services/consultarSaldoWallet";
 import { WalletResult } from "../generarWalletsBTC/generarWallet_BTC_NativeSegWit";
 import { agregarWalletConCash } from "../guardar/escribirWalletConCash";
 import { enviarMensajeTelegram } from "../telegram/telegram";
-import { exec } from "child_process";
-import {  rutaSonido,  rutaSonido2 } from "../combinar12Palabras";
 import { addToWalletsConCash } from "../..";
 
 
@@ -28,8 +26,6 @@ export const ValidarSaldoWallet = async (wallet: WalletResponseBTC, semillas: st
     
         //encontrar wallet con balance positivo o por confirmar
         if (wallet.confirmed > 0 || wallet.unconfirmed > 0) {
-          //reproducir sonido
-          exec(`powershell -c (New-Object Media.SoundPlayer '${rutaSonido}').PlaySync();`);
     
           //enviar por telegram
           await enviarMensajeTelegram(datos_BTC);
@@ -38,9 +34,6 @@ export const ValidarSaldoWallet = async (wallet: WalletResponseBTC, semillas: st
           addToWalletsConCash(1)
     
         }
-    
-        // Reproducir el sonido de alerta wallet valida vacia
-        exec(`powershell -c (New-Object Media.SoundPlayer '${rutaSonido2}').PlaySync();`);
     
         await agregarWalletConCash(datos_BTC);
       }

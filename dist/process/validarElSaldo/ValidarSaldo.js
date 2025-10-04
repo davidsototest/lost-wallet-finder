@@ -3,8 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidarSaldoWallet = void 0;
 const escribirWalletConCash_1 = require("../guardar/escribirWalletConCash");
 const telegram_1 = require("../telegram/telegram");
-const child_process_1 = require("child_process");
-const combinar12Palabras_1 = require("../combinar12Palabras");
 const __1 = require("../..");
 // Función para validar el saldo
 const ValidarSaldoWallet = async (wallet, semillas, walletBTC) => {
@@ -22,15 +20,11 @@ const ValidarSaldoWallet = async (wallet, semillas, walletBTC) => {
         };
         //encontrar wallet con balance positivo o por confirmar
         if (wallet.confirmed > 0 || wallet.unconfirmed > 0) {
-            //reproducir sonido
-            (0, child_process_1.exec)(`powershell -c (New-Object Media.SoundPlayer '${combinar12Palabras_1.rutaSonido}').PlaySync();`);
             //enviar por telegram
             await (0, telegram_1.enviarMensajeTelegram)(datos_BTC);
             //sumar en variable console.log
             (0, __1.addToWalletsConCash)(1);
         }
-        // Reproducir el sonido de alerta wallet valida vacia
-        (0, child_process_1.exec)(`powershell -c (New-Object Media.SoundPlayer '${combinar12Palabras_1.rutaSonido2}').PlaySync();`);
         await (0, escribirWalletConCash_1.agregarWalletConCash)(datos_BTC);
     }
 };

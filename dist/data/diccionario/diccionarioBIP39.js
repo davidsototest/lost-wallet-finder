@@ -1,55 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.diccionarioMezclado = exports.diccionarioMezclado2 = exports.diccionarioMezclado3 = exports.diccionarioMezclado1 = void 0;
-//dicionario test BTC
-exports.diccionarioMezclado1 = [
-    "quiz",
-    "inch",
-    "find",
-    "update",
-    "asset",
-    "enroll",
-    "arrange",
-    "squirrel",
-    "hungry",
-    "health",
-    "deputy",
-    "duck",
-    "pato",
-    "donal"
-];
-//dicionario test TRON con saldo
-exports.diccionarioMezclado3 = [
-    "picture",
-    "baby",
-    "neither",
-    "organ",
-    "finger",
-    "crew",
-    "forward",
-    "client",
-    "render",
-    "such",
-    "social",
-    "move",
-    "zoo"
-];
-//dicionario test TRON SIN saldo
-exports.diccionarioMezclado2 = [
-    "cage",
-    "hand",
-    "short",
-    "captain",
-    "jar",
-    "entire",
-    "daring",
-    "permit",
-    "thing",
-    "rifle",
-    "rebuild",
-    "sick",
-    "move"
-];
+exports.diccionarioMezclado = void 0;
 // diccionario mezclado
 exports.diccionarioMezclado = [
     "fatigue",

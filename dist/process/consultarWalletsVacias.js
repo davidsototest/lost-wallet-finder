@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.consultarWalletsVacias = void 0;
 const path_1 = __importDefault(require("path"));
 const child_process_1 = require("child_process");
-const consultarSaldoWallet_1 = require("../consultas/consultarSaldoWallet");
+const consultarSaldoWallet_1 = require("../services/consultarSaldoWallet");
 const leerSeguimientoWalletCash_1 = require("./leer/leerSeguimientoWalletCash");
 const telegram_1 = require("./telegram/telegram");
 const consultarSaldoWallet_TRON_1 = require("../consultas/consultarSaldoWallet_TRON");

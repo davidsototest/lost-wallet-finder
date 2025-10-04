@@ -1,6 +1,6 @@
 import path from "path";
 import { exec } from "child_process";
-import { consultarSaldoWallet } from "../consultas/consultarSaldoWallet";
+import { consultarSaldoWallet } from "../services/consultarSaldoWallet";
 import { leerSeguimientoWalletCash, WalletConCashItem } from "./leer/leerSeguimientoWalletCash";
 import { enviarMensajeTelegram } from "./telegram/telegram";
 import { consultarSaldoWallet_TRON } from "../consultas/consultarSaldoWallet_TRON";
