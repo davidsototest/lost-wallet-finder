@@ -14,6 +14,7 @@ export const generarCombinacion = async (inicio: number[], fin: number[]): Promi
   let indices = [...inicio];
 
   while (true) {
+
     // Mapeamos las palabras según los índices actuales
     const palabras = indices.map(i => diccionarioMezclado[i]);
     const semillas = palabras.join(" ");
@@ -35,6 +36,7 @@ export const generarCombinacion = async (inicio: number[], fin: number[]): Promi
         break;
       }
     }
+
     if (finAlcanzado) {
       console.log("Se alcanzó el índice final. Combinaciones completadas.");
       break;
