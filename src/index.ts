@@ -64,6 +64,8 @@ const run = async (): Promise<void> => {
 
   // imprimir data cada 10 segundos
   setInterval(() => {
+    console.clear();
+    console.log("Estado de los núcleos:");
     console.table(
       [...coreStats.values()].map((c) => ({
         core: c.workerId,
