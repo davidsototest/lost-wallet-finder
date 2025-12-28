@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getIndiceTask = getIndiceTask;
 const axios_1 = __importDefault(require("axios"));
 // Función que llama al servicio y obtiene la tarea
-async function getIndiceTask(ip, status = false) {
+async function getIndiceTask(ip, workerId, status = false) {
     try {
         let body;
         if (status) {

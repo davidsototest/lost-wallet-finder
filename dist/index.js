@@ -1,21 +1,25 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addToWallets = exports.contador = exports.addToWalletsConCash = exports.walletsConCashVar = exports.contadorCiclos = exports.indiceFin = exports.indiceInicio = void 0;
-const combinar12Palabras_1 = require("./process/combinar12Palabras");
-const telegram_1 = require("./process/telegram/telegram");
-const getIndiceTask_1 = require("./services/getIndiceTask");
+exports.addToWallets = exports.contador = exports.CPU_COUNT = exports.addToWalletsConCash = exports.walletsConCashVar = exports.coreStats = void 0;
+exports.handleWorkerMessage = handleWorkerMessage;
 const getIp_1 = require("./utils/getIp");
-// indice inicio y fin
-exports.indiceInicio = [];
-exports.indiceFin = [];
-exports.contadorCiclos = 0;
+const os_1 = __importDefault(require("os"));
+const path_1 = __importDefault(require("path"));
+const worker_threads_1 = require("worker_threads");
+// central de datos
+exports.coreStats = new Map();
 // contador de wallets consultadas y con cash
 exports.walletsConCashVar = 0;
 const addToWalletsConCash = (amount) => {
     exports.walletsConCashVar += amount;
 };
 exports.addToWalletsConCash = addToWalletsConCash;
-// contador de wallets consultadas
+exports.CPU_COUNT = os_1.default.availableParallelism?.() ?? os_1.default.cpus().length;
+// aqui debe ir la cantidad de wallets consultadas, cada vez que el nucleo
+// manda a sumar 1000 a esta variable, solo cuando el nucleo termina.
 exports.contador = 0;
 const addToWallets = (amount) => {
     exports.contador += amount;
@@ -23,30 +27,62 @@ const addToWallets = (amount) => {
 exports.addToWallets = addToWallets;
 const run = async () => {
     const ip = (0, getIp_1.getLocalIp)() ?? "IP no encontrada";
-    // Notificar inicio del bot
-    (0, telegram_1.enviarMensajeTelegramStart)("Bot iniciado exitosamente... IP: " + ip);
-    while (true) {
-        try {
-            // 1️⃣ Consultar servicio para obtener índices (sin status)
-            const tarea = await (0, getIndiceTask_1.getIndiceTask)(ip);
-            // 🔄 guardar indices
-            exports.indiceInicio = tarea.inicio;
-            exports.indiceFin = tarea.fin;
-            // 🔄 Reiniciar contadores para nueva tarea
-            exports.contador = 0;
-            exports.walletsConCashVar = 0;
-            exports.contadorCiclos++;
-            // 2️⃣ Procesar combinaciones con los arrays recibidos
-            await (0, combinar12Palabras_1.generarCombinacion)(tarea.inicio, tarea.fin);
-            // 3️⃣ Notificar al servicio que terminó la tarea (status: true)
-            await (0, getIndiceTask_1.getIndiceTask)(ip, true); // enviando status true para recibir nueva tarea
-            // El ciclo continúa automáticamente
-        }
-        catch (err) {
-            console.error('Error en el bucle del bot:', err);
-            // Opcional: esperar unos segundos antes de reintentar
-            await new Promise(resolve => setTimeout(resolve, 5000));
-        }
+    console.log("Núcleos disponibles:", exports.CPU_COUNT);
+    // Iniciar workers
+    const workers = [];
+    // 1 Procesar combinaciones con los arrays recibidos por cada núcleo
+    for (let i = 0; i < exports.CPU_COUNT; i++) {
+        // Asignar los datos de worker
+        exports.coreStats.set(i, {
+            workerId: i,
+            inicio: null,
+            fin: null,
+            ciclos: 1,
+            walletsProcesadas: 0,
+            lastUpdate: Date.now(),
+        });
+        new worker_threads_1.Worker(path_1.default.resolve(__dirname, "./worker_threads/worker.js"), {
+            workerData: {
+                ip,
+                workerId: i,
+            },
+        });
     }
+    // imprimir data cada 10 segundos
+    setInterval(() => {
+        console.table([...exports.coreStats.values()].map((c) => ({
+            core: c.workerId,
+            range: c.inicio && c.fin
+                ? `[${c.inicio[0]},${c.inicio.at(1)}]..[${c.inicio[2]} / ${c.fin[0]},${c.fin[1]}]..[${c.fin[2]}]`
+                : "-",
+            ciclos: c.ciclos,
+            wallets: c.walletsProcesadas,
+        })));
+        console.log("TOTAL wallets procesadas:", exports.contador);
+    }, 10000);
 };
-run();
+if (worker_threads_1.isMainThread) {
+    run();
+}
+function handleWorkerMessage(msg) {
+    const core = exports.coreStats.get(msg.workerId);
+    if (!core)
+        return;
+    core.lastUpdate = Date.now();
+    switch (msg.type) {
+        case "range_start":
+            core.inicio = msg.inicio;
+            core.fin = msg.fin;
+            // ✅ debug: validar que el mensaje llegó
+            console.log(`Worker ${msg.workerId} envió range_start:`, msg.inicio, msg.fin);
+            break;
+        case "range_done":
+            core.ciclos++;
+            core.walletsProcesadas += msg.wallets;
+            exports.contador += msg.wallets; // contador global
+            break;
+        case "heartbeat":
+            // solo mantiene vivo
+            break;
+    }
+}

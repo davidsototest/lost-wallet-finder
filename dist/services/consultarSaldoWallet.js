@@ -5,9 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.consultarSaldoWallet = void 0;
 const axios_1 = __importDefault(require("axios"));
-const dotenv_1 = __importDefault(require("dotenv"));
 const promises_1 = require("timers/promises");
-dotenv_1.default.config();
 // Creamos una instancia de Axios con configuración personalizada
 const axiosInstance = axios_1.default.create({
     headers: {
@@ -19,7 +17,7 @@ const axiosInstance = axios_1.default.create({
 // Función asíncrona que recibe una dirección y consulta el API
 const consultarSaldoWallet = async (address, retries = 3) => {
     try {
-        const baseUrl = process.env.APIGETSALDOWALLET;
+        const baseUrl = "https://api.blockchain.info/haskoin-store/btc/address";
         //if (!baseUrl) throw new Error("Variable de entorno no definida");
         const response = await axiosInstance.get(`${baseUrl}/${address}/balance`);
         //console.log(`Respuesta recibida para la dirección ${address}:`, response.data);
