@@ -46,7 +46,7 @@ const runWorker = async () => {
       parentPort!.postMessage({
         type: "range_done",
         workerId,
-        wallets: 1000,
+        wallets: 36778,
       });
 
       // 🔁 en la SIGUIENTE iteración avisamos que terminó

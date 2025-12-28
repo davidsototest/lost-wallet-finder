@@ -4,6 +4,8 @@ import os from "os";
 import path from "path";
 import { Worker, isMainThread } from "worker_threads";
 
+// función delay
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export type Indices = number[];
 
@@ -54,18 +56,24 @@ const run = async (): Promise<void> => {
       lastUpdate: Date.now(),
     });
 
+    // Crear el worker
     new Worker(path.resolve(__dirname, "./worker_threads/worker.js"), {
       workerData: {
         ip,
         workerId: i,
       },
     });
+
+    // Esperar 3 segundos antes de iniciar el siguiente worker
+    // para que de tiempo que el servicio asigne un rango distinto
+    await delay(5000);
   }
 
   // imprimir data cada 10 segundos
   setInterval(() => {
     console.clear();
     console.log("Estado de los núcleos:");
+    
     console.table(
       [...coreStats.values()].map((c) => ({
         core: c.workerId,

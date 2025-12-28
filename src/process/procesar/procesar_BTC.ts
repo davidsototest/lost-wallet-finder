@@ -18,18 +18,4 @@ export const procesar_BTC = async (semillas: string): Promise<void> => {
   //valido los saldos, guardo y aviso
   await ValidarSaldoWallet(saldoWallet_BTC_sergit, semillas, wallet_BTC_sergit);
   await ValidarSaldoWallet(saldoWallet_BTC_legacy, semillas, wallet_BTC_legacy);
-
-  // console.clear();
-  // console.log("----------------------------------------------------------------");
-  // console.log("inicio:", indiceInicio.join(","));
-  // console.log("fin:", indiceFin.join(","));
-  // console.log("nucleo: ", CPU_COUNT);
-  // console.log("----------------------------------------------------------------");
-  // console.log(`Wallets consultadas: ${contador}`);
-  // console.log(`Wallets con saldo: ${walletsConCashVar}`);
-  // console.log("ciclo actual:", contadorCiclos);
-  // //console.log(`Wallet_Legacy: ${wallet_BTC_legacy.Direccion} > Saldo: ${saldoWallet_BTC_legacy.confirmed + saldoWallet_BTC_legacy.unconfirmed}`);
-  // //console.log(`Wallet_Sergit: ${wallet_BTC_sergit.Direccion} > Saldo: ${saldoWallet_BTC_sergit.confirmed + saldoWallet_BTC_sergit.unconfirmed}`);
-  // console.log("----------------------------------------------------------------");
-
 };
