@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.generarCombinacion = void 0;
-const __1 = require("..");
 const diccionarioBIP39_1 = require("../data/diccionario/diccionarioBIP39");
 const incrementArray_1 = require("../utils/incrementArray");
 const procesar_BTC_1 = require("./procesar/procesar_BTC");
@@ -18,8 +17,6 @@ const generarCombinacion = async (inicio, fin) => {
         // Mapeamos las palabras según los índices actuales
         const palabras = indices.map(i => diccionarioBIP39_1.diccionarioMezclado[i]);
         const semillas = palabras.join(" ");
-        //sumar uno al contador
-        (0, __1.addToWallets)(2);
         // Validar que la frase sea mnemónica válida
         if ((0, bip39_ts_1.validateMnemonic)(semillas)) {
             // Procesamos BTC (y TRON si quieres agregarlo)

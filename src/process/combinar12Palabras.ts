@@ -1,4 +1,4 @@
-import { addToWallets } from "..";
+
 import { diccionarioMezclado } from "../data/diccionario/diccionarioBIP39";
 import { incrementArray } from "../utils/incrementArray";
 import { procesar_BTC } from "./procesar/procesar_BTC";
@@ -19,13 +19,10 @@ export const generarCombinacion = async (inicio: number[], fin: number[]): Promi
     const palabras = indices.map(i => diccionarioMezclado[i]);
     const semillas = palabras.join(" ");
 
-    //sumar uno al contador
-    addToWallets(2);
-
     // Validar que la frase sea mnemónica válida
     if (validateMnemonic(semillas)) {
       // Procesamos BTC (y TRON si quieres agregarlo)
-      await procesar_BTC(semillas);
+      await procesar_BTC(semillas); 
     }
 
     // Verificar si llegamos al fin

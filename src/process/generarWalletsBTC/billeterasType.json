@@ -32,7 +32,7 @@
       "estado": "Creciente (contratos complejos)"
     },
     {
-      "tipo": "P2TR (Taproot)",
+      "tipo": "P2TR (Taproot)      ------------ SACAR MUY BAJO EL VALOR -------------",
       "prefijo": "bc1p",
       "codificacion": "Bech32m",
       "porcentaje_btc": "3%",

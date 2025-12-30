@@ -6,37 +6,38 @@ const getIndiceTask_1 = require("../services/getIndiceTask");
 const telegram_1 = require("../process/telegram/telegram");
 const { ip, workerId } = worker_threads_1.workerData;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+let finished = false;
 const runWorker = async () => {
+    (0, telegram_1.enviarMensajeTelegramStart)(`Bot iniciado exitosamente... IP: ${ip}, núcleo: ${workerId}`);
     while (true) {
         try {
-            // Notificar inicio del bot
-            (0, telegram_1.enviarMensajeTelegramStart)(`Bot iniciado exitosamente... IP: ${ip}, nucleo numero: ${workerId}`);
-            // 🔹 pedir rango EXCLUSIVO para este núcleo
-            const tarea = await (0, getIndiceTask_1.getIndiceTask)(ip, workerId);
-            if (!tarea || !tarea.inicio || !tarea.fin) {
+            // 🔹 UNA sola llamada: devuelve rango válido
+            const tarea = await (0, getIndiceTask_1.getIndiceTask)(ip, workerId, finished);
+            finished = false; // reset inmediato
+            if (!tarea?.inicio || !tarea?.fin) {
                 await sleep(2000);
                 continue;
             }
             const { inicio, fin } = tarea;
             const iLen = inicio.length;
             const fLen = fin.length;
-            // guardar la data al inicio de cada ciclo
+            // 📤 informar inicio de rango
             worker_threads_1.parentPort.postMessage({
                 type: "range_start",
                 workerId,
-                inicio: [inicio[0], inicio[Math.max(iLen - 2, 0)], inicio[iLen - 1]],
-                fin: [fin[0], fin[Math.max(fLen - 2, 0)], fin[fLen - 1]],
+                inicio: `${inicio[0]}, ${inicio[1]}, ${inicio[2]}... ${inicio[10]} ${inicio[11]}`,
+                fin: `${fin[0]}, ${fin[1]}, ${fin[2]}... ${fin[10]} ${fin[11]}`,
             });
-            // 🔥 trabajo pesado, procesar wallet
+            // 🔥 trabajo pesado
             await (0, combinar12Palabras_1.generarCombinacion)(inicio, fin);
-            //   guardar los datos en el master al terminar
+            // 📤 informar finalización
             worker_threads_1.parentPort.postMessage({
                 type: "range_done",
                 workerId,
-                wallets: 1000,
+                wallets: 147112,
             });
-            // 🔹 notificar que ESTE rango terminó
-            await (0, getIndiceTask_1.getIndiceTask)(ip, workerId, true);
+            // 🔁 en la SIGUIENTE iteración avisamos que terminó
+            finished = true;
         }
         catch (err) {
             console.error(`Worker ${workerId} error:`, err);
@@ -45,12 +46,3 @@ const runWorker = async () => {
     }
 };
 runWorker();
-// (async () => {
-//   const {
-//     inicio,
-//     fin,
-//     workerId,
-//   } = workerData;
-//   await generarCombinacion(inicio, fin);
-//   parentPort?.close();
-// })();

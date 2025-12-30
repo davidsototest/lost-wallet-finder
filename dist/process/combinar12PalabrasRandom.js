@@ -38,7 +38,6 @@ const path = __importStar(require("path"));
 const procesar_BTC_1 = require("./procesar/procesar_BTC");
 //import { procesar_TRON } from "./procesar/procesar_TRON";
 const generarFraseValida_1 = require("./generarFrase/generarFraseValida");
-const __1 = require("..");
 //ruta del sonido
 exports.rutaSonido = path.join(__dirname, "../data/sonido/mision-cumplida1.wav");
 exports.rutaSonido2 = path.join(__dirname, "../data/sonido/bell-sound-final.wav");
@@ -50,8 +49,6 @@ const generarCombinacionRandomII = async () => {
     while (true) {
         //Generar frase semilla random ya validada
         const semillas = (0, generarFraseValida_1.generarFraseValida)();
-        //sumar uno al contador
-        (0, __1.addToWallets)(3);
         //procesar todo de BTC y TRON
         await Promise.all([
             (0, procesar_BTC_1.procesar_BTC)(semillas),

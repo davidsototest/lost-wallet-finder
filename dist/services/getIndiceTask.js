@@ -10,10 +10,10 @@ async function getIndiceTask(ip, workerId, status = false) {
     try {
         let body;
         if (status) {
-            body = { ip, status: true };
+            body = { ip, workerId, status: true };
         }
         else {
-            body = { ip };
+            body = { ip, workerId };
         }
         ;
         const res = await axios_1.default.post('https://api-367omuvtoa-uc.a.run.app/seguimiento', body, {

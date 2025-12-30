@@ -2,15 +2,10 @@ import * as bip39 from "bip39";
 import { BIP32Factory } from "bip32";
 import * as ecc from "tiny-secp256k1";
 import * as bitcoin from "bitcoinjs-lib";
+import { WalletResult } from "../../interfaces/WalletResult.interface";
 
 const bip32 = BIP32Factory(ecc);
 const NETWORK = bitcoin.networks.bitcoin;
-
-// Interfaz para el resultado
-export interface WalletResult {
-  Direccion: string;
-  Clave_privada: string;
-}
 
 // Arrow function que recibe un string con las 12 palabras y retorna la wallet
 export const generarWallet_BTC_NativeSegWit_P2WPKH = (mnemonic: string): WalletResult => {

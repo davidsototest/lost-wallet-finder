@@ -5,15 +5,13 @@ import path from "path";
 import { Worker, isMainThread } from "worker_threads";
 
 // función delay
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-export type Indices = number[];
+export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 // interface de los datos de mapeo
 export interface CoreStats {
   workerId: number;
-  inicio: Indices | null;
-  fin: Indices | null;
+  inicio: string | null;
+  fin: string | null;
   ciclos: number;
   walletsProcesadas: number;
   lastUpdate: number;
@@ -39,7 +37,11 @@ export const addToWallets = (amount: number) => {
 const run = async (): Promise<void> => {
   const ip = getLocalIp() ?? "IP no encontrada";
 
+  // saber cuantos nucleos tiene esta maquina
   console.log("Núcleos disponibles:", CPU_COUNT);
+
+  //notificar por telegram que se inició el proceso
+  await enviarMensajeTelegramStart(`nueva maquina iniciada con ip: ${ip}, y cantidad de nucleos: ${CPU_COUNT}`);
 
   // Iniciar workers
   const workers: Promise<void>[] = [];
@@ -73,13 +75,18 @@ const run = async (): Promise<void> => {
   setInterval(() => {
     console.clear();
     console.log("Estado de los núcleos:");
+
+    let totalWallets = 0;
+    coreStats.forEach(c => {
+      totalWallets += c.walletsProcesadas;
+    });
     
     console.table(
       [...coreStats.values()].map((c) => ({
         core: c.workerId,
         range:
           c.inicio && c.fin
-            ? `[${c.inicio[0]},${c.inicio.at(1)}]..[${c.inicio[2]} / ${c.fin[0]},${c.fin[1]}]..[${c.fin[2]}]`
+            ? `${c.inicio} / ${c.fin}`
             : "-",
         ciclos: c.ciclos,
         wallets: c.walletsProcesadas,
@@ -87,6 +94,7 @@ const run = async (): Promise<void> => {
     );
 
     console.log("TOTAL wallets procesadas:", contador);
+    console.log("Wallets con cash:", walletsConCashVar);
   }, 10000);
 };
 
@@ -98,7 +106,7 @@ if (isMainThread) {
 /////////////////////////////////////////////////////////
 
 type WorkerMessage =
-  | { type: "range_start"; workerId: number; inicio: number[]; fin: number[] }
+  | { type: "range_start"; workerId: number; inicio: string; fin: string }
   | { type: "range_done"; workerId: number; wallets: number }
   | { type: "heartbeat"; workerId: number };
 

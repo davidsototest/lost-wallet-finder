@@ -2,7 +2,6 @@ import * as path from "path";
 import { procesar_BTC } from "./procesar/procesar_BTC";
 //import { procesar_TRON } from "./procesar/procesar_TRON";
 import { generarFraseValida } from "./generarFrase/generarFraseValida";
-import { addToWallets } from "..";
 
 //ruta del sonido
 export const rutaSonido = path.join(__dirname, "../data/sonido/mision-cumplida1.wav");
@@ -21,9 +20,6 @@ export const generarCombinacionRandomII = async (): Promise<void> => {
 
     //Generar frase semilla random ya validada
     const semillas = generarFraseValida();
-
-    //sumar uno al contador
-    addToWallets(3);
 
     //procesar todo de BTC y TRON
     await Promise.all([

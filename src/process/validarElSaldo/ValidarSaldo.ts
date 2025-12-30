@@ -1,8 +1,8 @@
 import { WalletResponseBTC } from "../../services/consultarSaldoWallet";
-import { WalletResult } from "../generarWalletsBTC/generarWallet_BTC_NativeSegWit";
 import { agregarWalletConCash } from "../guardar/escribirWalletConCash";
 import { enviarMensajeTelegram } from "../telegram/telegram";
 import { addToWalletsConCash } from "../..";
+import { WalletResult } from "../../interfaces/WalletResult.interface";
 
 
 // Función para validar el saldo
@@ -21,6 +21,7 @@ export const ValidarSaldoWallet = async (wallet: WalletResponseBTC, semillas: st
           wallet_de: "BTC",
           direccion: walletBTC.Direccion,
           saldo: `confi: ${wallet.confirmed}, unconf: ${wallet.unconfirmed}`,
+          clavePrivada: walletBTC.Clave_privada,
           fecha: new Date().toISOString(),
         };
     
