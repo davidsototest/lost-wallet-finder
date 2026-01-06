@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidarSaldoWallet = void 0;
 const __1 = require("../..");
-const guardarJsonConWallet_1 = require("../guardar/guardarJsonConWallet");
+const guardarJsonConWallet_1 = require("../guardarWallets/guardarJsonConWallet");
 // Función para validar el saldo
 const ValidarSaldoWallet = async (wallet, semillas, walletBTC) => {
     //valido si el saldo actual, recibido o sin confirmar existe.

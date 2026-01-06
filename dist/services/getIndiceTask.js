@@ -5,7 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getIndiceTask = getIndiceTask;
 const axios_1 = __importDefault(require("axios"));
-// Función que llama al servicio y obtiene la tarea
+// Función que llama al servicio y obtiene el rango donde
+// va a trabajar el nodo
 async function getIndiceTask(ip, workerId, status = false) {
     try {
         let body;

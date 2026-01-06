@@ -13,7 +13,9 @@ export interface SeguimientoRequest {
     status?: boolean; // opcional
 }
 
-// Función que llama al servicio y obtiene la tarea
+// Función que llama al servicio y obtiene el rango donde
+// va a trabajar el nodo
+
 export async function getIndiceTask(ip: string, workerId: number, status: boolean = false): Promise<TaskDocResponse> {
   try {
 

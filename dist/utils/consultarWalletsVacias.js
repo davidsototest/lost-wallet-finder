@@ -8,9 +8,8 @@ const path_1 = __importDefault(require("path"));
 const child_process_1 = require("child_process");
 const consultarSaldoWallet_1 = require("../services/consultarSaldoWallet");
 const telegram_1 = require("./telegram/telegram");
-const consultarSaldoWallet_TRON_1 = require("../consultas/consultarSaldoWallet_TRON");
-const leerWalletsDesdeCarpeta_1 = require("../utils/leerWalletsDesdeCarpeta");
-const delay_1 = require("../utils/delay");
+const leerWalletsDesdeCarpeta_1 = require("./leerWalletsDesdeCarpeta");
+const delay_1 = require("./delay");
 //ruta del sonido
 const rutaSonido = path_1.default.join(__dirname, "../data/sonido/mision-cumplida1.wav");
 //funcion para sonsultar las wallets que ubicamos, pero vacias
@@ -18,12 +17,7 @@ const rutaSonido = path_1.default.join(__dirname, "../data/sonido/mision-cumplid
 const consultarWalletsVacias = async () => {
     const wallets = (0, leerWalletsDesdeCarpeta_1.leerWalletsDesdeCarpeta)();
     for (const wallet of wallets) {
-        if (wallet.wallet_de === "BTC") {
-            await validarBTC(wallet);
-        }
-        else {
-            await validarTRON(wallet);
-        }
+        await validarBTC(wallet);
     }
 };
 exports.consultarWalletsVacias = consultarWalletsVacias;
@@ -45,46 +39,10 @@ const validarBTC = async (wallet) => {
                 wallet_de: `BTC`,
                 direccion: wallet.direccion,
                 saldo: `Confir: ${resultado.confirmed}, unconfir: ${resultado.unconfirmed}`,
-                fecha: new Date().toISOString()
+                fecha: new Date().toISOString(),
             };
             //enviar mensaje por telegram
             (0, telegram_1.enviarMensajeTelegram)(datosCompletos);
-        }
-    }
-    catch (error) {
-        console.error(`Error al consultar ${wallet.direccion}:`, error);
-    }
-};
-//validar si es TRON
-const validarTRON = async (wallet) => {
-    try {
-        const resultado = await (0, consultarSaldoWallet_TRON_1.consultarSaldoWallet_TRON)(wallet.direccion);
-        //validar que la respuesta no sea NULL
-        if (resultado === null) {
-            console.log(`Wallet sin nada que buscar . . .
-                  ----------------------------------------------------------`);
-            return; // Finaliza la ejecución de esta función
-        }
-        //guardar todas las monedas de DATA
-        const walletsData = resultado.data;
-        for (const walletData of walletsData) {
-            console.log(`Dirección TRON: ${wallet.direccion}`);
-            console.log(`moneda: ${walletData.tokenAbbr} > balance: ${walletData.balance}`);
-            console.log("----------------------------------------");
-            if (Number(walletData.balance) > 0 || resultado.transactions_in > 0) {
-                //reproducir sonido
-                (0, child_process_1.exec)(`powershell -c (New-Object Media.SoundPlayer '${rutaSonido}').PlaySync();`);
-                //armar objeto
-                const datosCompletos = {
-                    frase: wallet.frase,
-                    wallet_de: `TRON = ${walletData.tokenAbbr}`,
-                    direccion: wallet.direccion,
-                    saldo: String(walletData.balance),
-                    fecha: new Date().toISOString()
-                };
-                //enviar mensaje por telegram
-                (0, telegram_1.enviarMensajeTelegram)(datosCompletos);
-            }
         }
     }
     catch (error) {

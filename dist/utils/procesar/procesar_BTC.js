@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.procesar_BTC = void 0;
 const consultarSaldoWallet_1 = require("../../services/consultarSaldoWallet");
-const delay_1 = require("../../utils/delay");
+const delay_1 = require("../delay");
 const generarWallet_BTC_NativeSegWit_1 = require("../generarWalletsBTC/generarWallet_BTC_NativeSegWit");
 const generarWallet_BTC_Taproot_1 = require("../generarWalletsBTC/generarWallet_BTC_Taproot");
 const generarWallet_BTC_Wrapped_P2SH_1 = require("../generarWalletsBTC/generarWallet_BTC_Wrapped_P2SH");

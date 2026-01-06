@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const worker_threads_1 = require("worker_threads");
-const combinar12Palabras_1 = require("../process/combinar12Palabras");
 const getIndiceTask_1 = require("../services/getIndiceTask");
-const telegram_1 = require("../process/telegram/telegram");
+const telegram_1 = require("../utils/telegram/telegram");
+const combinar12Palabras_1 = require("../utils/combinar12palabras/combinar12Palabras");
 const { ip, workerId } = worker_threads_1.workerData;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 let finished = false;

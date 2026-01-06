@@ -1,11 +1,9 @@
-import { enviarMensajeTelegramStart } from "./process/telegram/telegram";
+import { enviarMensajeTelegramStart } from "./utils/telegram/telegram";
 import { getLocalIp } from "./utils/getIp";
 import os from "os";
 import path from "path";
 import { Worker, isMainThread } from "worker_threads";
-
-// función delay
-export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+import { delay } from "./utils/delay";
 
 // interface de los datos de mapeo
 export interface CoreStats {
@@ -47,7 +45,7 @@ const run = async (): Promise<void> => {
   const workers: Promise<void>[] = [];
 
   // 1 Procesar combinaciones con los arrays recibidos por cada núcleo
-  for (let i = 0; i < CPU_COUNT; i++) {
+  for (let i = 0; i < 1; i++) {
     // Asignar los datos de worker
     coreStats.set(i, {
       workerId: i,

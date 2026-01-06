@@ -1,8 +1,7 @@
 import { parentPort, workerData } from "worker_threads";
-import { generarCombinacion } from "../process/combinar12Palabras";
 import { getIndiceTask } from "../services/getIndiceTask";
-import { enviarMensajeTelegramStart } from "../process/telegram/telegram";
-import { coreStats } from "..";
+import { enviarMensajeTelegramStart } from "../utils/telegram/telegram";
+import { generarCombinacion } from "../utils/combinar12palabras/combinar12Palabras";
 
 const { ip, workerId } = workerData;
 

@@ -1,6 +1,6 @@
 import axios from "axios";
-import dotenv from "dotenv";
 import { setTimeout } from "timers/promises";
+import { delay } from "../utils/delay";
 
 export interface WalletResponseBTC {
   address: string;
@@ -25,6 +25,10 @@ export const consultarSaldoWallet = async (
   address: string,
   retries = 3
 ): Promise<WalletResponseBTC> => {
+
+  // delay a modo prueba por rate limit 
+  await delay(1000);
+
   try {
     const baseUrl = "https://api.blockchain.info/haskoin-store/btc/address";
     //if (!baseUrl) throw new Error("Variable de entorno no definida");

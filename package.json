@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "tsc && node dist/index.js",
+    "wallet": "tsc && node dist/indexTwo.js",
     "dev": "node dist/index.js",
     "pm2:bot": "pm2 start dist/index.js --name bot"
   },
