@@ -19,11 +19,11 @@ export const procesar_BTC = async (semillas: string): Promise<void> => {
 
   // consultar saldo de ambas
   const saldoWallet_BTC_sergit = await consultarSaldoWallet(wallet_BTC_sergit.Direccion);
-  await delay(1000);
+  // await delay(1000);
   const saldoWallet_BTC_legacy = await consultarSaldoWallet(wallet_BTC_legacy.Direccion);
-  await delay(1000);
+  // await delay(1000);
   const saldoWallet_BTC_taproot = await consultarSaldoWallet(wallet_BTC_taproot.Direccion);
-  await delay(1000);
+  // await delay(1000);
   const saldoWallet_BTC_wrapped = await consultarSaldoWallet(wallet_BTC_wrapped.Direccion);
 
   //valido los saldos, guardo y aviso
@@ -31,4 +31,9 @@ export const procesar_BTC = async (semillas: string): Promise<void> => {
   await ValidarSaldoWallet(saldoWallet_BTC_legacy, semillas, wallet_BTC_legacy);
   await ValidarSaldoWallet(saldoWallet_BTC_taproot, semillas, wallet_BTC_taproot);
   await ValidarSaldoWallet(saldoWallet_BTC_wrapped, semillas, wallet_BTC_wrapped);
+
+  console.log(`wallet: ${wallet_BTC_legacy.Direccion}, BTC SegWit: ${saldoWallet_BTC_sergit.confirmed}`);
+  console.log(`wallet: ${wallet_BTC_legacy.Direccion}, BTC Legacy: ${saldoWallet_BTC_legacy.confirmed}`);
+  console.log(`wallet: ${wallet_BTC_taproot.Direccion}, BTC Taproot: ${saldoWallet_BTC_taproot.confirmed}`);
+  console.log(`wallet: ${wallet_BTC_wrapped.Direccion}, BTC Wrapped: ${saldoWallet_BTC_wrapped.confirmed}`);
 };

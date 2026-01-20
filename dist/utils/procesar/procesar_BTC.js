@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.procesar_BTC = void 0;
 const consultarSaldoWallet_1 = require("../../services/consultarSaldoWallet");
-const delay_1 = require("../delay");
 const generarWallet_BTC_NativeSegWit_1 = require("../generarWalletsBTC/generarWallet_BTC_NativeSegWit");
 const generarWallet_BTC_Taproot_1 = require("../generarWalletsBTC/generarWallet_BTC_Taproot");
 const generarWallet_BTC_Wrapped_P2SH_1 = require("../generarWalletsBTC/generarWallet_BTC_Wrapped_P2SH");
@@ -17,16 +16,20 @@ const procesar_BTC = async (semillas) => {
     const wallet_BTC_wrapped = (0, generarWallet_BTC_Wrapped_P2SH_1.generarWallet_BTC_Wrapped_P2SH)(semillas);
     // consultar saldo de ambas
     const saldoWallet_BTC_sergit = await (0, consultarSaldoWallet_1.consultarSaldoWallet)(wallet_BTC_sergit.Direccion);
-    await (0, delay_1.delay)(1000);
+    // await delay(1000);
     const saldoWallet_BTC_legacy = await (0, consultarSaldoWallet_1.consultarSaldoWallet)(wallet_BTC_legacy.Direccion);
-    await (0, delay_1.delay)(1000);
+    // await delay(1000);
     const saldoWallet_BTC_taproot = await (0, consultarSaldoWallet_1.consultarSaldoWallet)(wallet_BTC_taproot.Direccion);
-    await (0, delay_1.delay)(1000);
+    // await delay(1000);
     const saldoWallet_BTC_wrapped = await (0, consultarSaldoWallet_1.consultarSaldoWallet)(wallet_BTC_wrapped.Direccion);
     //valido los saldos, guardo y aviso
     await (0, ValidarSaldo_1.ValidarSaldoWallet)(saldoWallet_BTC_sergit, semillas, wallet_BTC_sergit);
     await (0, ValidarSaldo_1.ValidarSaldoWallet)(saldoWallet_BTC_legacy, semillas, wallet_BTC_legacy);
     await (0, ValidarSaldo_1.ValidarSaldoWallet)(saldoWallet_BTC_taproot, semillas, wallet_BTC_taproot);
     await (0, ValidarSaldo_1.ValidarSaldoWallet)(saldoWallet_BTC_wrapped, semillas, wallet_BTC_wrapped);
+    console.log(`wallet: ${wallet_BTC_legacy.Direccion}, BTC SegWit: ${saldoWallet_BTC_sergit.confirmed}`);
+    console.log(`wallet: ${wallet_BTC_legacy.Direccion}, BTC Legacy: ${saldoWallet_BTC_legacy.confirmed}`);
+    console.log(`wallet: ${wallet_BTC_taproot.Direccion}, BTC Taproot: ${saldoWallet_BTC_taproot.confirmed}`);
+    console.log(`wallet: ${wallet_BTC_wrapped.Direccion}, BTC Wrapped: ${saldoWallet_BTC_wrapped.confirmed}`);
 };
 exports.procesar_BTC = procesar_BTC;

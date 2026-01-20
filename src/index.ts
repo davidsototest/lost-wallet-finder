@@ -70,30 +70,30 @@ const run = async (): Promise<void> => {
   }
 
   // imprimir data cada 10 segundos
-  setInterval(() => {
-    console.clear();
-    console.log("Estado de los núcleos:");
+  // setInterval(() => {
+  //   console.clear();
+  //   console.log("Estado de los núcleos:");
 
-    let totalWallets = 0;
-    coreStats.forEach(c => {
-      totalWallets += c.walletsProcesadas;
-    });
+  //   let totalWallets = 0;
+  //   coreStats.forEach(c => {
+  //     totalWallets += c.walletsProcesadas;
+  //   });
     
-    console.table(
-      [...coreStats.values()].map((c) => ({
-        core: c.workerId,
-        range:
-          c.inicio && c.fin
-            ? `${c.inicio} / ${c.fin}`
-            : "-",
-        ciclos: c.ciclos,
-        wallets: c.walletsProcesadas,
-      }))
-    );
+  //   // console.table(
+  //   //   [...coreStats.values()].map((c) => ({
+  //   //     core: c.workerId,
+  //   //     range:
+  //   //       c.inicio && c.fin
+  //   //         ? `${c.inicio} / ${c.fin}`
+  //   //         : "-",
+  //   //     ciclos: c.ciclos,
+  //   //     wallets: c.walletsProcesadas,
+  //   //   }))
+  //   // );
 
-    console.log("TOTAL wallets procesadas:", contador);
-    console.log("Wallets con cash:", walletsConCashVar);
-  }, 10000);
+  //   // console.log("TOTAL wallets procesadas:", contador);
+  //   // console.log("Wallets con cash:", walletsConCashVar);
+  // }, 10000);
 };
 
 if (isMainThread) {
