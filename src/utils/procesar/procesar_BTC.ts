@@ -11,6 +11,8 @@ import { ValidarSaldoWallet } from "../validarElSaldo/ValidarSaldo";
 // funcion para procesar todo de BTC
 export const procesar_BTC = async (semillas: string): Promise<void> => { 
 
+  const delay_timeout = 10;
+
   // generar wallets
   const wallet_BTC_sergit = generarWallet_BTC_NativeSegWit_P2WPKH(semillas); 
   const wallet_BTC_legacy = generarWallet_BTC_Legacy(semillas);
@@ -19,11 +21,11 @@ export const procesar_BTC = async (semillas: string): Promise<void> => {
 
   // consultar saldo de ambas
   const saldoWallet_BTC_sergit = await consultarSaldoWallet(wallet_BTC_sergit.Direccion);
-  // await delay(1000);
+  await delay(delay_timeout);
   const saldoWallet_BTC_legacy = await consultarSaldoWallet(wallet_BTC_legacy.Direccion);
-  // await delay(1000);
+  await delay(delay_timeout);
   const saldoWallet_BTC_taproot = await consultarSaldoWallet(wallet_BTC_taproot.Direccion);
-  // await delay(1000);
+  await delay(delay_timeout);
   const saldoWallet_BTC_wrapped = await consultarSaldoWallet(wallet_BTC_wrapped.Direccion);
 
   //valido los saldos, guardo y aviso
