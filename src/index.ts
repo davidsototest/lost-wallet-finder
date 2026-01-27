@@ -57,7 +57,7 @@ const run = async (): Promise<void> => {
     });
 
     // Crear el worker
-    new Worker(path.resolve(__dirname, "./worker_threads/worker.js"), {
+    new Worker(path.resolve(__dirname, "./worker_threads/workerRandom.js"), {
       workerData: {
         ip,
         workerId: i,

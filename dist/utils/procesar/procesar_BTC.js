@@ -10,7 +10,7 @@ const generarWallet_BTC_legacy_1 = require("../generarWalletsBTC/generarWallet_B
 const ValidarSaldo_1 = require("../validarElSaldo/ValidarSaldo");
 // funcion para procesar todo de BTC
 const procesar_BTC = async (semillas) => {
-    const delay_timeout = 500;
+    const delay_timeout = 10;
     // generar wallets
     const wallet_BTC_sergit = (0, generarWallet_BTC_NativeSegWit_1.generarWallet_BTC_NativeSegWit_P2WPKH)(semillas);
     const wallet_BTC_legacy = (0, generarWallet_BTC_legacy_1.generarWallet_BTC_Legacy)(semillas);

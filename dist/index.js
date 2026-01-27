@@ -47,7 +47,7 @@ const run = async () => {
             lastUpdate: Date.now(),
         });
         // Crear el worker
-        new worker_threads_1.Worker(path_1.default.resolve(__dirname, "./worker_threads/worker.js"), {
+        new worker_threads_1.Worker(path_1.default.resolve(__dirname, "./worker_threads/workerRandom.js"), {
             workerData: {
                 ip,
                 workerId: i,
